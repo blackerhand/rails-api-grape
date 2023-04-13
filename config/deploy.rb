@@ -37,6 +37,7 @@ set :linked_dirs, ['log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+set :rvm_ruby_version, '2.7.6'
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure

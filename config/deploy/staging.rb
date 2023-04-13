@@ -10,6 +10,8 @@ server "web2", user: "deploy", roles: %w[app db web], my_property: :my_value
 set :branch, ENV['BRANCH'] || :master
 set :rails_env, "staging"
 
+set :puma_bind, 'tcp://0.0.0.0:8083'
+
 # role-based syntax
 # ==================
 
