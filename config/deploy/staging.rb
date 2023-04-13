@@ -8,7 +8,7 @@ server "web2", user: "deploy", roles: %w[app db web], my_property: :my_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 set :branch, ENV['BRANCH'] || :master
-set :rails_env, "production"
+set :rails_env, "staging"
 
 # role-based syntax
 # ==================

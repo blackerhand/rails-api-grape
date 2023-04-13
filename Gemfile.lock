@@ -68,6 +68,7 @@ GEM
       tzinfo (~> 2.0)
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
+    bcrypt_pbkdf (1.0.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -121,6 +122,7 @@ GEM
       dry-core (~> 0.5, >= 0.5)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.8, >= 1.8.0)
+    ed25519 (1.2.4)
     erubi (1.12.0)
     et-orbi (1.2.7)
       tzinfo
@@ -159,7 +161,7 @@ GEM
       net-ssh (>= 2.6.5, < 8.0.0)
     net-smtp (0.3.3)
       net-protocol
-    net-ssh (7.0.1)
+    net-ssh (7.1.0)
     nio4r (2.5.9)
     nokogiri (1.14.3-x86_64-darwin)
       racc (~> 1.4)
@@ -237,7 +239,7 @@ GEM
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
-    sshkit (1.21.3)
+    sshkit (1.21.4)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     thor (1.2.1)
@@ -253,11 +255,13 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap
   byebug
-  capistrano
+  capistrano (~> 3.17)
   config
   debug
+  ed25519 (>= 1.2, < 2.0)
   mysql2 (~> 0.5)
   pry-byebug
   pry-rails
