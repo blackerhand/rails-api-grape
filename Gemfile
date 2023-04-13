@@ -17,6 +17,7 @@ gem "puma", "~> 6.2"
 
 # Use Redis adapter to run Action Cable in production
 gem 'redis'
+gem 'redis-rails'
 gem 'redis-namespace'
 
 gem 'sidekiq', '< 7'

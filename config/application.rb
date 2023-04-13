@@ -41,11 +41,10 @@ module RailsApiGrapeV2
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.cache_store = :redis_store, {
-      url:       Settings.REDIS_URL || 'redis://127.0.0.1:6379/1',
-      password:  Settings.REDIS_PASSWD,
-      namespace: "cache"
-    }, {
+    config.cache_store = :redis_cache_store, {
+      url:        Settings.REDIS_URL || 'redis://127.0.0.1:6379/1',
+      password:   Settings.REDIS_PASSWD,
+      namespace:  "cache",
       expires_in: 90.minutes
     }
   end
