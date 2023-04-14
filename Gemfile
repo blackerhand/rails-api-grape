@@ -5,6 +5,7 @@ ruby "2.7.6"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
+gem 'rails-i18n', '~> 7.0.0'
 
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
@@ -20,8 +21,8 @@ gem 'redis'
 gem 'redis-rails'
 gem 'redis-namespace'
 
-gem 'sidekiq', '< 7'
-gem 'sidekiq-cron'
+gem 'sidekiq', '~> 6.5'
+gem 'sidekiq-cron', '~> 1.10'
 
 gem 'config'
 
@@ -60,6 +61,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
   gem 'capistrano3-puma', github: "seuros/capistrano-puma"
+  gem 'capistrano-sidekiq'
 
   gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'

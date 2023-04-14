@@ -19,6 +19,11 @@ require 'capistrano/puma'
 install_plugin Capistrano::Puma # Default puma tasks
 install_plugin Capistrano::Puma::Systemd
 
+require 'capistrano/sidekiq'
+install_plugin Capistrano::Sidekiq # Default sidekiq tasks
+# Then select your service manager
+install_plugin Capistrano::Sidekiq::Systemd
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:

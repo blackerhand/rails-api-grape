@@ -1,0 +1,6 @@
+init_first_job:
+  cron: "* * * * *"
+  class: 'InitFirstJob'
+  queue: default
+  desc: "每天凌晨 1 点, 同步管理员信息"
+
