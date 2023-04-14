@@ -4,6 +4,8 @@
 :queues:
   - [ default, 2 ]
 staging:
-  :concurrency: 2
+  :concurrency: 6
+  :queues:
+    - [ default, 4 ]
 production:
   :concurrency: 10
