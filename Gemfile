@@ -7,6 +7,7 @@ ruby "2.7.6"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
 gem 'rails-i18n', '~> 7.0.0'
+gem 'sprockets-rails'
 
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
@@ -43,7 +44,16 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem "rack-cors"
+gem "rack-cors"
+
+gem 'grape', '~> 1.7'
+gem 'grape-entity', '~> 1.0'
+gem 'hashie'
+gem 'hashie-forbidden_attributes'
+
+gem 'grape-swagger'
+gem 'grape-swagger-entity'
+gem 'grape-swagger-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

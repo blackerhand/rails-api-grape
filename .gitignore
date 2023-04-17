@@ -31,3 +31,7 @@
 /config/credentials/staging.key
 
 /config/credentials/production.key
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
