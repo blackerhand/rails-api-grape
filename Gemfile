@@ -28,6 +28,17 @@ gem 'sidekiq-cron', '~> 1.10'
 
 gem 'config'
 
+# valid
+gem 'jwt', '~> 2.1'
+gem "pundit", '~> 2.3'
+gem 'rolify', '~> 6.0'
+
+# file
+gem 'carrierwave', '>= 3.0.0.beta', '< 4.0'
+gem "net-http", '~> 0.3'
+
+gem 'paper_trail', '~> 14.0'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
