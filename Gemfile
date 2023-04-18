@@ -60,6 +60,7 @@ gem "rack-cors"
 
 gem 'grape', '~> 1.7'
 gem 'grape-entity', '~> 1.0'
+gem 'grape-rails-cache'
 gem 'hashie'
 gem 'hashie-forbidden_attributes'
 

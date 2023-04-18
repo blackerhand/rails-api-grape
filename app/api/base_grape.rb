@@ -7,9 +7,10 @@ class BaseGrape < Grape::API
 
   # validator
   require './lib/validations/max_length'
+  require './lib/validations/min_length'
 
   helpers ApplicationHelper, ErrorHelper, DataBuildHelper, CacheHelper
-  # include Grape::Rails::Cache
+  include Grape::Rails::Cache
 
   # 401
   rescue_from(SignError) { |e| auth_error!(e) }

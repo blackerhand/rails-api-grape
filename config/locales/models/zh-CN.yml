@@ -16,6 +16,7 @@ zh-CN:
         type: 用户类型
         role_ids: 角色列表
         password: 密码
+        avatar: 头像
       file_object:
         file_url: 文件地址
         filename: 文件名
