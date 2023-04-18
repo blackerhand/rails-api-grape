@@ -321,8 +321,6 @@ GEM
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
-    spring (2.0.2)
-      activesupport (>= 4.2)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -387,7 +385,6 @@ DEPENDENCIES
   rolify (~> 6.0)
   sidekiq (~> 6.5)
   sidekiq-cron (~> 1.10)
-  spring
   sprockets-rails
   tzinfo-data
 
