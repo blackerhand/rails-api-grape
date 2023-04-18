@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   include Disable
   rolify
+  has_secure_password
 
   has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable
 

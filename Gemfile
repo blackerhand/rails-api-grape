@@ -30,6 +30,7 @@ gem 'config'
 
 # valid
 gem 'jwt', '~> 2.1'
+gem 'bcrypt', '~> 3.1.18'
 gem "pundit", '~> 2.3'
 gem 'rolify', '~> 6.0'
 
