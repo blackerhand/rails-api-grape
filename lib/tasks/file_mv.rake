@@ -1,9 +1,15 @@
 task file_mv: :environment do
-  puts 'file_mv'
+  map_dir(Rails.root.join('app_1'))
+end
 
-  Dir.open('app') do |file|
-    puts file
+def map_dir(dir)
+  dir.children.each do |file|
+    next if file.to_s == '.' || file.to_s == '..'
+
+    if File.file?(file)
+      FileUtils.mv(file, Rails.root.join('app_2'))
+    else
+      map_dir(file)
+    end
   end
-
-  puts 'a_init_province_and_cities end'
 end

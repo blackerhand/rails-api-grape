@@ -36,4 +36,94 @@ config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 
+*~
+~*
+*.rbc
+**.orig
+.yardoc/**/*
+hddoss/*
+app/**/*.map
+pickle-email-*.html
+Gruntfile.js
+app/models/applies/
+spec/models/applies/
+bundle/*
+.fuse_hidden*
+
+# nodejs
+/node_modules/*
+package.json
+
+# test
+Guardfile
+.rspec
+/spec/tmp
+capybara-*.html
+/**/coverage/
+/**/screenshots/
+
+# sass cache
+.sass-cache/*
+
+# Ignore all logfiles and tempfiles.
+/tmp
 /public/uploads
+/public/examples
+/public/system
+/public/assets
+/public/robots.txt
+/public/sitemap.xml
+/public/sitemap.xml.gz
+
+# dotenv
+# Comment out this rule if environment variables can be committed
+.env
+
+# these should all be checked in to normalize the environment:
+# Gemfile.lock
+.ruby-version
+.ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+
+# if using bower-rails ignore default bower_components path bower.json files
+/vendor/assets/bower_components
+*.bowerrc
+bower.json
+
+# Ignore pow environment settings
+.powenv
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+*/Thumbs.db
+*.bak
+*.swp
+
+# Ignore RubyMine files
+.idea
+
+# Ignore bundler config.
+.bundle
+/vendor/bundle
+
+# ======= 安全相关 ===========
+# Ignore application configuration
+/config/application.yml
+
+# Comment out this rule if you are OK with secrets being uploaded to the repo
+config/initializers/secret_token.rb
+
+# Only include if you have production secrets in this file, which is no longer a Rails default
+# config/secrets.yml
+
+# database
+/db/*.db
+/db/*.sqlite*
+/db/schema.rb
+/config/database.yml
