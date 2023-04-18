@@ -1,0 +1,55 @@
+# Usage:
+# 1. Put this file in config/locales/grape/zh-CN.yml
+# 2. Set load_path in config/application.rb as below:
+#    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+
+zh-CN:
+  grape:
+    errors:
+      format: ! '%{attributes} %{message}'
+      messages:
+        coerce: '无效'
+        presence: '缺失'
+        regexp: '无效'
+        blank: '为空'
+        values: '无效值'
+        missing_vendor_option:
+          problem: '缺少 :vendor 选项。'
+          summary: '当版本号使用 Header 指定时，必须指定 :vendor 选项。'
+          resolution: "如：version 'v1', using: :header, vendor: 'twitter'"
+        missing_mime_type:
+          problem: '缺少 %{new_format} 的 MIME 类型。'
+          resolution:
+            "你可以在 Grape::ContentTypes::CONTENT_TYPES 预置的 MIME 类型中选择一个，或者
+            通过 content_type :%{new_format}, 'application/%{new_format}' 自定义一个
+            "
+        invalid_with_option_for_represent:
+          problem: '你必须通过 :with 选项指定一个 entity 类。'
+          resolution: '如：represent User, :with => Entity::User'
+        missing_option: '你必须指定 :%{option} 选项。'
+        invalid_formatter: '不能将类型 %{klass} 转换为 %{to_format}'
+        invalid_versioner_option:
+          problem: 'version 声明中 :using 选项的取值：%{strategy} 无法识别。'
+          resolution: '有效的 :using 取值为 :path，:header 或 :param'
+        unknown_validator: '未知的校验器: %{validator_type}'
+        unknown_options: '未知选项：%{options}'
+        unknown_parameter: '未知参数：%{param}'
+        incompatible_option_values: '%{option1}: %{value1} 和 %{option2}: %{value2} 不兼容'
+        mutual_exclusion: '是互斥的'
+        at_least_one: '缺失, 至少需要提供一个参数'
+        exactly_one: '缺失, 只能提供一个参数'
+        all_or_none: '提供全部参数，或者都不提供'
+        missing_group_type: '需要提够 group 类型'
+        unsupported_group_type: 'group 类型只能是 Array 或 Hash'
+        invalid_message_body:
+          problem: "信息内容和指定的格式不相符"
+          resolution:
+            "当指定 %{body_format} 作为 content-type 时，你必须在请求的 'body' 中
+            传递一个有效的 %{body_format}'
+            "
+        invalid_accept_header:
+          problem: '无效的 Accept Header'
+          resolution: '%{message}'
+        invalid_version_header:
+          problem: '无效的 version header'
+          resolution: '%{message}'

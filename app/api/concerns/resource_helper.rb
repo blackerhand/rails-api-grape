@@ -11,6 +11,10 @@ module ResourceHelper
     source.to_s.match(/(\w+)_grape/)[1]
   end
 
+  def params_scope
+    controller_name.singularize
+  end
+
   # def action_name
   #   actions = routes.first.origin.gsub(/(\/v\d+)|(:)/, '').split('/').delete_if { |str| str.blank? || str == controller_name }
   #   actions.unshift(request_method).join('_')

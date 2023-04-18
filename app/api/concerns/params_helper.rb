@@ -1,5 +1,9 @@
 module ParamsHelper
   def declared_params
+    real_params.send params_scope
+  end
+
+  def real_params
     declared(params, include_missing: false)
   end
 

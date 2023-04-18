@@ -16,7 +16,6 @@ class BaseGrape < Grape::API
   rescue_from(JwtSignature::SignError) { |e| auth_error!(e) }
 
   # 403
-  rescue_from(Pundit::NotAuthorizedError) { |e| permit_error!(e) }
   rescue_from(PermissionDeniedError) { |e| permit_error!(e) }
 
   # 404

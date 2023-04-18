@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  code            :string(6)
+#  disabled_at     :datetime
+#  email           :string(100)
+#  nickname        :string(100)
+#  password_digest :string(255)
+#  type            :string(40)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  created_user_id :bigint
+#  updated_user_id :bigint
+#
+# Indexes
+#
+#  index_users_on_nickname  (nickname)
+#  index_users_on_type      (type)
+#
 class User < ApplicationRecord
   include Disable
   rolify
@@ -6,6 +27,8 @@ class User < ApplicationRecord
   has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable
 
   after_create :create_files_avatar!
+
+  validates :email, presence: true, uniqueness: true
 
   def is_admin
     type == 'Admin'
@@ -47,5 +70,10 @@ class User < ApplicationRecord
     raise SignError, '用户不存在, 请重新登录' if user.nil?
 
     user
+  end
+
+  def gen_code!
+    update!(code: rand(999_999).to_s.rjust(6, '0'))
+    code
   end
 end

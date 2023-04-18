@@ -1,0 +1,24 @@
+zh-CN:
+  activerecord:
+    models:
+      role: 角色
+      resource: 权限
+      user: 用户
+    attributes:
+      post:
+        title: 标题
+        desc: 内容
+      user:
+        nickname: 姓名
+        avatar_url: 头像
+        email: 邮箱
+        disabled_at: 删除时间
+        type: 用户类型
+        role_ids: 角色列表
+        password: 密码
+      file_object:
+        file_url: 文件地址
+        filename: 文件名
+        filename_with_ext: 完整文件名
+        ext: 后缀名
+        download_path: 下载地址

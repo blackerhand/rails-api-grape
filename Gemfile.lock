@@ -79,6 +79,9 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     bcrypt (3.1.18)
     bcrypt_pbkdf (1.1.0)
     bootsnap (1.16.0)
@@ -245,8 +248,6 @@ GEM
     public_suffix (5.0.1)
     puma (6.2.1)
       nio4r (~> 2.0)
-    pundit (2.3.0)
-      activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.6.2)
     rack (2.2.6.4)
@@ -347,6 +348,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  annotate
   bcrypt (~> 3.1.18)
   bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap
@@ -375,7 +377,6 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma (~> 6.2)
-  pundit (~> 2.3)
   rack-cors
   rails (~> 7.0.4)
   rails-i18n (~> 7.0.0)
