@@ -1,7 +1,6 @@
 # base for sign grapes
 class SignGrape < BaseGrape
   helpers AuthHelper
-  # helpers Pundit
 
   before { parse_jwt! }
 
