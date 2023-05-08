@@ -5,7 +5,7 @@ module Entities
                       :email,
                       :avatar_url,
                       :disabled_at,
-                      :is_admin
+                      :admin?
 
       expose :roles, using: Entities::Role::List, documentation: { desc: '角色' }
     end

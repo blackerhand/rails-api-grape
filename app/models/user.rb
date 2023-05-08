@@ -16,6 +16,7 @@
 #
 # Indexes
 #
+#  index_users_on_email     (email) UNIQUE
 #  index_users_on_nickname  (nickname)
 #  index_users_on_type      (type)
 #
@@ -24,40 +25,38 @@ class User < ApplicationRecord
   rolify
   has_secure_password
 
-  has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable
-
+  has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable, dependent: :destroy
+  validates :email, presence: true, uniqueness: true
   after_create :create_files_avatar!
 
-  validates :email, presence: true, uniqueness: true
-
-  def is_admin
+  def admin?
     type == 'Admin'
   end
 
-  def is_super_admin
+  def super_admin?
     has_role?(GRAPE_API::SUPER_ADMIN_NAME)
   end
 
   # 超级管理员默认拥有所有权限，非超级管理员需要判断对于该资源是否有权限
-  def has_resources?(resource_name)
-    is_super_admin || resource_names.include?(resource_name)
+  def resources?(resource_name)
+    super_admin? || resource_names.include?(resource_name)
   end
 
   def resource_names
     @resource_names ||=
-      if is_super_admin
+      if super_admin?
         Resource.all.order(id: :asc).map(&:name).uniq
       else
         Acl.where(role_id: roles.pure_roles.ids)
            .joins(:resource)
-           .select("resources.name as resource_name")
+           .select('resources.name as resource_name')
            .order('resources.id asc')
            .map(&:resource_name).uniq
       end
   end
 
   def payload
-    slice(:id, :is_admin)
+    slice(:id, :admin?)
   end
 
   def avatar_url

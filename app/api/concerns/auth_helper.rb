@@ -19,7 +19,7 @@ module AuthHelper
     set_papertrail_user(current_user_id)
   end
 
-  def set_papertrail_user(current_user_id)
+  def set_papertrail_user=(current_user_id)
     ::PaperTrail.request.whodunnit = current_user_id
   end
 
@@ -28,7 +28,7 @@ module AuthHelper
   end
 
   def resource_authorize
-    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.has_resources?(action_full_name)
+    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.resources?(action_full_name)
   end
 
   def verify_admin!

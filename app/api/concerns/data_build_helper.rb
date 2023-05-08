@@ -1,7 +1,6 @@
 # 200 code 返回 data 构建规则
 # 203 表示 token 有更新, 检查 response header Authorization, 得到新的token, 此时应该更新客户端的 token
 # 结构说明 {meta: {*payload, path: '/', version: '1'}, data: {id: '1', type: 'User', attributes: {}}/[]}
-# rubocop:disable Metrics/AbcSize,Metrics/ModuleLength,Metrics/MethodLength
 module DataBuildHelper
   # render service 返回, [true, {data}]
   def render_service!(rsp, opts = {})
@@ -20,7 +19,7 @@ module DataBuildHelper
     header['Content-Disposition']           = "attachment; filename=#{ERB::Util.url_encode(file_name)}"
     env['api.format']                       = :binary
 
-    File.open(file_object.file.path).read
+    File.read(file_object.file.path)
   end
 
   def data!(data, opts = {})
@@ -174,7 +173,7 @@ module DataBuildHelper
       path:          request.path,
       status:        200,
       refresh_token: @refresh_token,
-      version:       request.path.match(%r{\/v(\d+)\/}).try(:[], 1)
+      version:       request.path.match(%r{/v(\d+)/}).try(:[], 1)
     }
   end
 
@@ -206,4 +205,4 @@ module DataBuildHelper
     }
   end
 end
-# rubocop:enable Metrics/AbcSize,Metrics/ModuleLength,Metrics/MethodLength
+# rubocop:enable Metrics/AbcSize,Metrics/ModuleLength

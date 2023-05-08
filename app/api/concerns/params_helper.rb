@@ -20,7 +20,7 @@ module ParamsHelper
 
   def params_blank?(attr)
     return true if attr.blank?
-    return attr.select { |at| at.present? }.blank? if attr.is_a? Array
+    return attr.select(&:present?).blank? if attr.is_a? Array
 
     false
   end

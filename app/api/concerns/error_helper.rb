@@ -1,4 +1,4 @@
-# rubocop:disable Lint/Void, Naming/UncommunicativeMethodParamName
+# rubocop:disable Lint/Void,Naming/MethodParameterName
 module ErrorHelper
   def auth_error!(e, meta = {})
     meta[:status] ||= 401
@@ -65,7 +65,7 @@ module ErrorHelper
   def meta_error_message(e)
     message =
       if e.is_a?(ActiveRecord::RecordNotFound)
-        "该#{I18n.t('activerecord.models.' + e.model.underscore)}已被删除, 请刷新页面后重试"
+        "该#{I18n.t("activerecord.models.#{e.model.underscore}")}已被删除, 请刷新页面后重试"
       elsif e.respond_to?(:message)
         e.message
       elsif e.is_a?(Hash)
@@ -77,4 +77,4 @@ module ErrorHelper
     message.is_a?(Array) ? message.join(', ') : message
   end
 end
-# rubocop:enable Lint/Void, Naming/UncommunicativeMethodParamName
+# rubocop:enable Lint/Void,Naming/MethodParameterName

@@ -16,6 +16,7 @@
 #
 # Indexes
 #
+#  index_users_on_email     (email) UNIQUE
 #  index_users_on_nickname  (nickname)
 #  index_users_on_type      (type)
 #

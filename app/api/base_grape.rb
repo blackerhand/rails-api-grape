@@ -49,6 +49,7 @@ class BaseGrape < Grape::API
     doc_version: '0.1.0',
     host:        Settings.HOST.gsub(/(http|https):\/\//, ''),
     tags:        [
-                   { name: 'static', description: '首页' },
-                 ])
+      { name: 'static', description: '首页' }
+    ]
+  )
 end

@@ -35,7 +35,7 @@ class FileObject < ApplicationRecord
   def self.find_by_url(url)
     return unless url.to_s.start_with?(Settings.HOST)
 
-    where(id: url.split(/\//)[-2]).first
+    where(id: url.split('/')[-2]).first
   end
 
   def filename_with_ext
@@ -45,14 +45,14 @@ class FileObject < ApplicationRecord
   private
 
   def set_file_attrs
-    if file.try(:file)
-      o_file             = file.file
-      original_name, ext = o_file.filename.split(/\./)
+    return unless file.try(:file)
 
-      self.filename       = original_name
-      self.ext            = ext
-      self.size           = o_file.size
-      self.content_digest = Digest::SHA1.hexdigest(o_file.read)
-    end
+    o_file             = file.file
+    original_name, ext = o_file.filename.split('.')
+
+    self.filename       = original_name
+    self.ext            = ext
+    self.size           = o_file.size
+    self.content_digest = Digest::SHA1.hexdigest(o_file.read)
   end
 end

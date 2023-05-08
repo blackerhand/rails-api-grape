@@ -3,7 +3,7 @@ module Entities
     class Info < Base
       expose_with_doc :nickname, :email, :avatar_url,
                       :disabled_at,
-                      :is_admin
+                      :admin?
     end
   end
 end

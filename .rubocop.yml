@@ -1,0 +1,95 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'lib/tasks/cucumber.rake'
+    - 'lib/tasks/**/*.rake'
+    - 'features/**/*'
+    - 'spec/**/*'
+    - 'script/**/*'
+    - 'config/**/*'
+    - 'Capfile'
+    - 'Gemfile'
+    - 'factories/**'
+    - 'Gemfile'
+    - 'public/**/*'
+    - 'app/misc/svc/beary_chat.rb'
+    - 'app/models/comment.rb'
+    - 'app/policies/**/*'
+
+Layout/LineLength:
+  Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Layout/EndOfLine:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/YodaCondition:
+  EnforcedStyle: forbid_for_equality_operators_only
+
+Style/Documentation:
+  Enabled: false
+
+Layout/HashAlignment:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false

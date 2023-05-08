@@ -16,7 +16,7 @@ module ExposeWithDoc
     end
 
     def model_name
-      self.to_s.split("::")[1].underscore
+      to_s.split('::')[1].underscore
     end
   end
 end

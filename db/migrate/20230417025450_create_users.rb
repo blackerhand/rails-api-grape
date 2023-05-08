@@ -11,6 +11,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.bigint :updated_user_id
       t.datetime :disabled_at
 
+      t.index :email, unique: true
+
       t.timestamps
     end
   end

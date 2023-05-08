@@ -1,6 +1,6 @@
 module Users
   class ResetPasswdMail < BaseService
-    def initialize (email)
+    def initialize(email)
       @email = email
       @user  = User.find_by(email: @email)
     end

@@ -6,7 +6,6 @@ module JwtSignature
 
   module_function
 
-  # rubocop:disable Style/RescueStandardError
   def verify!(token)
     token.gsub!(/^Bearer /, '') if token.to_s.start_with?('Bearer ')
     JWT.decode token, Settings.JWT_SECRET, true, algorithm: 'HS256'
@@ -24,6 +23,4 @@ module JwtSignature
   def refresh!(payload)
     sign(payload) if payload['exp'] - Time.current.to_i < GRAPE_API::JWT_REFRESH
   end
-
-  # rubocop:enable Style/RescueStandardError
 end
