@@ -6,7 +6,7 @@ GrapeSwaggerRails.options.url      = '/api/swagger'
 #   GrapeSwaggerRails.options.app_url = request.protocol + request.host_with_port
 # end
 
-unless Rails.env.development?
+if Rails.env.production?
   GrapeSwaggerRails.options.api_auth     = 'basic'
   GrapeSwaggerRails.options.api_key_name = 'Authorization'
   GrapeSwaggerRails.options.api_key_type = 'header'
