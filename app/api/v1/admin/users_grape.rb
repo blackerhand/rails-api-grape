@@ -5,7 +5,7 @@ module V1
         summary '用户列表'
         detail '用户列表'
         tags ['admin_users']
-        success Entities::Guide::List
+        success Entities::User::Info
       end
       params do
         optional :q, type: Hash do

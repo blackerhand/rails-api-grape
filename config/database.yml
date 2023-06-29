@@ -14,8 +14,8 @@ default: &default
   encoding: utf8mb4
   collation: utf8mb4_unicode_ci
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: xxx
-  password: xxxx
+  username: yueye
+  password: 1
   socket: /tmp/mysql.sock
 
 development:

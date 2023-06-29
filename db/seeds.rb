@@ -5,5 +5,5 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-a = Admin.create!(email: '1@1.com', password: '123123', nickname: 'admin1')
-a.add_role(GRAPE_API::SUPER_ADMIN_NAME)
+a = Admin.create!(email: '1@1.com', password: 'asd123123', nickname: 'admin1')
+a.add_role(GRAPE_API::SUPER_ADMIN_ROLE_NAME)

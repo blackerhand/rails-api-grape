@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_17_075207) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_09_090433) do
   create_table "acls", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "resource_id"
     t.bigint "role_id"
@@ -36,10 +36,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_075207) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "title", null: false, comment: "标题"
+    t.text "desc", comment: "说明"
+    t.integer "click_number", default: 0, comment: "点击次数"
+    t.bigint "created_user_id"
+    t.bigint "updated_user_id"
+    t.datetime "disabled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["click_number"], name: "index_posts_on_click_number"
+  end
+
   create_table "resources", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name", limit: 100, null: false
-    t.string "description"
-    t.integer "status"
+    t.string "key", limit: 100, null: false, comment: "菜单名称"
+    t.string "i18n_title", limit: 100, comment: "菜单中文名称"
+    t.string "router_path", limit: 100, comment: "路由"
+    t.boolean "keep_alive", default: true, comment: "页面保持"
+    t.string "icon", limit: 100, comment: "图标"
+    t.boolean "hide", default: true, comment: "是否隐藏"
+    t.integer "order_index", default: 1, comment: "排序"
+    t.integer "menu_type", default: 2, comment: "菜单类型"
+    t.integer "platform", default: 1, comment: "平台"
     t.string "ancestry", limit: 100
     t.bigint "created_user_id"
     t.bigint "updated_user_id"
@@ -47,6 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_075207) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["ancestry"], name: "index_resources_on_ancestry"
+    t.index ["i18n_title"], name: "index_resources_on_i18n_title", unique: true
+    t.index ["key"], name: "index_resources_on_key", unique: true
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -60,8 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_075207) do
     t.datetime "disabled_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-    t.index ["name"], name: "index_roles_on_name", unique: true
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
