@@ -127,3 +127,7 @@ config/initializers/secret_token.rb
 /db/*.sqlite*
 /db/schema.rb
 /config/database.yml
+Procfile
+
+/data
+.vscode/*

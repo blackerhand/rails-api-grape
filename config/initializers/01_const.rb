@@ -1,31 +1,29 @@
 module GRAPE_API
-  JWT_EXP          = Settings.JWT_EXP.to_i
-  JWT_REFRESH      = Settings.JWT_EXP.to_i / 2
-  SUPER_ADMIN_NAME = :SUPER_ADMIN
+  JWT_EXP     = Settings.JWT_EXP.to_i
+  JWT_REM_EXP = Settings.JWT_REM_EXP.to_i
+  JWT_REFRESH = Settings.JWT_REFRESH.to_i
+
+  # 后台角色
+  SUPER_ADMIN_ROLE_NAME = :SUPER_ADMIN # 超级管理员
+  RAILS_SERVE_STATIC_FILES = true
 
   TYPE_LIMIT_LENGTH = 40
 
-  EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  # 正则不允许为空, 设置的时候请注意此字段, 设置 optional 无效
+  EMAIL_REGEX  = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  PASSWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}\z/i # 8 位 字母+数字
 
   # 字符串
-  REQUIRES_STRING_REGEX = /\A.{1,50}\Z/
-  OPTIONAL_STRING_REGEX = /\A.{0,50}\Z/
-
   MAX_TEXT_LENGTH   = 20000
   MAX_STRING_LENGTH = 50
 
-  # 字母开头
-  REQUIRES_EN_REGEX = /\A[A-Za-z]\w+\Z/
-
-  # 字母/数字
-  REQUIRES_EN_1_REGEX = /\A\w+\Z/
+  # 字母开头, 正则允许为空, 非空检验用 grape 校验, 设置 optional 有效
+  EN_REGEX = /\A([a-zA-Z][a-zA-Z0-9_\-:]*)?\Z/
 
   MAX_INTEGER = BigDecimal(99999999)
 
   PER_PAGE   = 15
   SEARCH_PER = 10
-
-  USER_TYPES = %w[Admin User]
 
   NOT_REQUIRE_LOGIN = %w[post_users_sign_in post_users_sign_up
                         post_users_reset post_users_send_mail

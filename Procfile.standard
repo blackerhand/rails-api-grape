@@ -1,0 +1,4 @@
+# cp此文件为文件名Procfile，做为本地的foreman启动文件
+# 启动：foreman start （本地首先要 gem install foreman）
+web: bundle exec puma -C config/puma/staging.rb
+sidekiq: bundle exec sidekiq -C config/sidekiq.yml

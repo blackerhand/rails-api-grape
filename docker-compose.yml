@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: 1
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/tmp
+    entrypoint: /usr/src/app/docker-entrypoint.sh
+    command: [ "foreman", "start" ]
+#    command: [ "rails", "server", "-b", "0.0.0.0" ]
+#    command: [ 'RAILS_ENV=docker_dev bundle exec rake db:drop && RAILS_ENV=docker_dev bundle exec rake db:setup']
+#    command:  [ "tail", "-f", "log/development.log" ]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+      - db

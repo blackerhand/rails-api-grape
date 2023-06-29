@@ -6,5 +6,5 @@ class SignGrape < BaseGrape
 
   # mounts
   mount V1::UsersGrape => '/v1/users'
-  # mount V1::FileObjectsGrape => '/v1/files'
+  mount V1::FileObjectsGrape => '/v1/files'
 end

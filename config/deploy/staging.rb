@@ -7,8 +7,25 @@ server "web2", user: "deploy", roles: %w[app db web], my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-set :branch, ENV['BRANCH'] || :master
+set :branch, ENV['BRANCH'] || :develop
 set :rails_env, "staging"
+
+set :nginx_domains, "xx.com"
+set :nginx_server_name, "xx.com"
+
+set :app_server_host, "127.0.0.1"
+set :app_server_port, "9020"
+
+set :nginx_use_ssl, true
+set :nginx_ssl_certificate_path, "/etc/nginx/ssl/"
+set :nginx_ssl_certificate_key_path, "/etc/nginx/ssl/"
+
+# ssl_protocols TLSv1.2 TLSv1.3;
+# ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+# ssl_prefer_server_ciphers on;
+
+set :nginx_ssl_certificate, "xx.crt"
+set :nginx_ssl_certificate_key, "xx.key"
 
 # set :puma_bind, 'tcp://0.0.0.0:8083'
 

@@ -5,21 +5,49 @@ zh-CN:
       resource: 权限
       user: 用户
     attributes:
-      post:
-        title: 标题
-        desc: 内容
       user:
         nickname: 姓名
         avatar_url: 头像
         email: 邮箱
         disabled_at: 删除时间
-        type: 用户类型
-        role_ids: 角色列表
+        type: 用户身份
+        role_ids: 角色列表 ID
         password: 密码
         avatar: 头像
+        roles: 角色列表
       file_object:
         file_url: 文件地址
         filename: 文件名
         filename_with_ext: 完整文件名
         ext: 后缀名
         download_path: 下载地址
+      role:
+        name: 角色标识
+        name_zh: 名称
+        desc: 描述
+        resource_ids: 权限列表 ID
+        can_modify: 是否允许修改
+      post:
+        title: 新闻标题
+        desc: 说明
+        click_number: 点击次数
+      resource:
+        key: 权限名称
+        i18n_title: 中文权限名称
+        router_path: 路由
+        icon: 图标
+        order_index: 排序
+        hide: 是否隐藏
+        keep_alive: 页面保持
+        children: 子权限
+        parent: 父权限
+        parent_id: 父权限 ID
+        menu_type: 权限类型
+        menu_type_name: 权限类型中文
+        menu_type_names:
+          menu: 菜单
+          button: 按钮
+        platform: 平台
+        platform_name: 平台中文
+        platform_names:
+          admin: 管理端

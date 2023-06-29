@@ -25,6 +25,15 @@ AllCops:
 Layout/LineLength:
   Enabled: false
 
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Layout/FirstHashElementIndentation:
+  Enabled: false
+
+Layout/FirstArrayElementIndentation:
+  Enabled: false
+
 Lint/MissingSuper:
   Enabled: false
 

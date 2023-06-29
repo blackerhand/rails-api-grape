@@ -19,7 +19,6 @@
 #  updated_user_id   :bigint
 #  user_id           :integer
 #
-
 module Files
   class ImageObject < FileObject
     mount_uploader :file, ImgUploader

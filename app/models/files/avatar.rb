@@ -19,7 +19,6 @@
 #  updated_user_id   :bigint
 #  user_id           :integer
 #
-
 module Files
   class Avatar < ImageObject
     mount_uploader :file, AvatarUploader

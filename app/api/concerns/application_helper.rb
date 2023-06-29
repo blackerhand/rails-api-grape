@@ -9,22 +9,21 @@ module ApplicationHelper
     @current_user = User.find_by(id: @payload['id'])
   end
 
+  def update_current_user(user, remember)
+    @current_user = user
+    @payload      = @current_user.payload.merge(remember: remember).stringify_keys
+  end
+
   def current_user_id
     current_user.try(:id)
   end
 
   def current_record
-    return if params.id.nil? || record_class.nil?
-
-    @current_record ||= record_class.enabled.find(params.id)
+    @current_record ||= current_scope.find(params.id)
   end
 
-  def page_per
-    params[:per] || GRAPE_API::PER_PAGE
-  end
-
-  def params_page
-    params[:page] || 1
+  def current_scope
+    record_class.enabled
   end
 
   def upload_file(file_type, params_file)

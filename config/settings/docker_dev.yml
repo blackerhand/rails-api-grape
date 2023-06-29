@@ -1,0 +1,4 @@
+# redis
+REDIS_URL: 'redis://redis:6379/2'
+REDIS_PASSWD:
+

@@ -12,6 +12,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  created_user_id :bigint
+#  grade_id        :bigint
 #  updated_user_id :bigint
 #
 # Indexes
@@ -22,41 +23,57 @@
 #
 class User < ApplicationRecord
   include Disable
-  rolify
+  rolify strict: true
   has_secure_password
 
   has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable, dependent: :destroy
   validates :email, presence: true, uniqueness: true
   after_create :create_files_avatar!
 
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[id nickname email type]
+  end
+
+  def add_resource_role(role_name, resource)
+    add_role(role_name)
+    add_role(role_name, resource)
+  end
+
+  def remove_resource_role(role_name, resource)
+    remove_role(role_name)
+    remove_role(role_name, resource) unless roles.resource_roles.exists?(name: role_name)
+  end
+
+  # 管理员
   def admin?
     type == 'Admin'
   end
 
+  # 超级管理员
   def super_admin?
-    has_role?(GRAPE_API::SUPER_ADMIN_NAME)
+    has_role?(GRAPE_API::SUPER_ADMIN_ROLE_NAME)
   end
 
   # 超级管理员默认拥有所有权限，非超级管理员需要判断对于该资源是否有权限
-  def resources?(resource_name)
-    super_admin? || resource_names.include?(resource_name)
+  def resources?(resource_key)
+    super_admin? || resource_keys.include?(resource_key)
   end
 
-  def resource_names
-    @resource_names ||=
+  def resources
+    @resources ||=
       if super_admin?
-        Resource.all.order(id: :asc).map(&:name).uniq
+        Resource.all
       else
-        Acl.where(role_id: roles.pure_roles.ids)
-           .joins(:resource)
-           .select('resources.name as resource_name')
-           .order('resources.id asc')
-           .map(&:resource_name).uniq
-      end
+        Resource.joins(:acls).where(acls: { role_id: roles.pure_roles.ids })
+      end.order(id: :asc)
+  end
+
+  def resource_keys
+    @resource_keys ||= resources.pluck(:key).uniq
   end
 
   def payload
-    slice(:id, :admin?)
+    slice(:id, :type)
   end
 
   def avatar_url

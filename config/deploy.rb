@@ -2,7 +2,7 @@
 lock "~> 3.17.1"
 
 set :application, "grape_v2"
-set :repo_url, "git@github.com:blackerhand/rails-api-grape-v2.git"
+set :repo_url, "https://github.com/oldrailser/rails-api-grape-v2.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -37,7 +37,7 @@ set :linked_dirs, ['log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
-set :rvm_ruby_version, '2.7.6'
+set :rvm_ruby_version, '3.2.2'
 
 set :sidekiq_config_files, ['sidekiq.yml']
 # Uncomment the following to require manually verifying the host key before first deploy.

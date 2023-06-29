@@ -20,12 +20,12 @@ module V1
       end
       params do
         requires :post, type: Hash do
-          requires :title, type: String, max_length: GRAPE_API::MAX_STRING_LENGTH, allow_blank: false, desc: '名称'
-          requires :desc, type: String, max_length: GRAPE_API::MAX_TEXT_LENGTH, allow_blank: false, desc: '新闻详情'
+          string_field :title
+          text_field :desc
         end
       end
       post '/' do
-        @post = Post.create!(declared_params.post.to_h)
+        @post = Post.create!(declared_params.to_h)
         data_record!(@post, Entities::Post::Detail)
       end
 
@@ -48,12 +48,12 @@ module V1
         end
         params do
           requires :post, type: Hash do
-            requires :title, type: String, max_length: GRAPE_API::MAX_STRING_LENGTH, allow_blank: false, desc: '名称'
-            requires :desc, type: String, max_length: GRAPE_API::MAX_TEXT_LENGTH, allow_blank: false, desc: '新闻详情'
+            string_field :title
+            text_field :desc
           end
         end
         put '/' do
-          current_record.update!(declared_params.post.to_h)
+          current_record.update!(declared_params.to_h)
           data_record!(current_record, Entities::Post::Detail)
         end
 

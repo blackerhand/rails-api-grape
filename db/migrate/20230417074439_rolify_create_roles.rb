@@ -4,7 +4,6 @@ class RolifyCreateRoles < ActiveRecord::Migration[5.2]
       t.string :name, limit: 100
       t.string :name_zh, limit: 100
       t.string :desc
-      # t.references :resource, :polymorphic => true
       t.bigint :resource_id
       t.string :resource_type, limit: GRAPE_API::TYPE_LIMIT_LENGTH
 
@@ -20,8 +19,7 @@ class RolifyCreateRoles < ActiveRecord::Migration[5.2]
       t.references :role
     end
 
-    add_index(:roles, :name, unique: true)
-    add_index(:roles, [:name, :resource_type, :resource_id])
+    add_index(:roles, [:name, :resource_type, :resource_id], unique: true)
     add_index(:users_roles, [:user_id, :role_id])
   end
 end

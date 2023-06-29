@@ -8,10 +8,11 @@ class RecordAlreadyDisabled < StandardError; end
 
 class RecordNotAllowDisabled < StandardError; end
 
-class RecordCheckInvalid < StandardError; end
-
 class SearchError < StandardError; end
 
 class ClientRequestError < StandardError; end
 
 class GetIoFormatError < StandardError; end
+
+# service 前置校验不通过
+class ServiceCheckError < StandardError; end

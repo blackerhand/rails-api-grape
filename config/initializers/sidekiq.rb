@@ -10,6 +10,6 @@ end
 
 schedule_file = File.join(Rails.root, "config/scheduler/#{Rails.env}.yml")
 
-if Sidekiq.server? && File.exists?(schedule_file)
+if Sidekiq.server? && File.exist?(schedule_file)
   Sidekiq::Cron::Job.load_from_hash! YAML.load_file(schedule_file)
 end

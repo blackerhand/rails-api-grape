@@ -19,7 +19,7 @@ module DataBuildHelper
     header['Content-Disposition']           = "attachment; filename=#{ERB::Util.url_encode(file_name)}"
     env['api.format']                       = :binary
 
-    File.read(file_object.file.path)
+    File.read(file_object.real_file_path)
   end
 
   def data!(data, opts = {})
@@ -162,6 +162,15 @@ module DataBuildHelper
   def entities_record_no_base(record, entities_class, opts = {})
     opts ||= {}
     entities_class.represent record, opts
+  end
+
+  def ancestry_tree(arrange_records, entity)
+    arrange_records.each.map do |parent, children|
+      attrs            = entity.represent(parent).as_json
+      attrs[:children] = ancestry_tree(children, entity) if children.present?
+
+      attrs
+    end
   end
 
   private

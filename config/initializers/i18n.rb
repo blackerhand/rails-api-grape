@@ -1,20 +1,20 @@
 module I18n
   module_function
 
-  def t_activerecord(model, attributes = nil, opts = {})
+  def t_activerecord(model, attributes = nil)
+    return 'ID' if attributes.to_s.underscore == 'id'
+    return '创建时间' if attributes.to_s == 'created_at'
+    return '创建日期' if attributes.to_s == 'created_date'
+    return '更新时间' if attributes.to_s == 'updated_at'
+    return '更新日期' if attributes.to_s == 'updated_date'
+    return '页码' if attributes.to_s == 'page'
+    return '分页数量' if attributes.to_s == 'per'
     return if model.blank?
 
     if attributes.present?
-      return 'ID' if attributes.to_s.underscore == 'id'
-      return '创建时间' if attributes.to_s == 'created_at'
-      return '创建日期' if attributes.to_s == 'created_date'
-      return '更新时间' if attributes.to_s == 'updated_at'
-      return '更新日期' if attributes.to_s == 'updated_date'
-      return 'Canvas ID' if attributes.to_s == 'canvas_id'
-
-      t("activerecord.attributes.#{model}.#{attributes}", opts)
+      t("activerecord.attributes.#{model}.#{attributes}")
     else
-      t("activerecord.models.#{model}", opts)
+      t("activerecord.models.#{model}")
     end
   end
 

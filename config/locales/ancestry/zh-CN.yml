@@ -1,0 +1,16 @@
+zh-CN:
+  ancestry:
+    unknown_depth_option: "未知的深度选项：%{scope_name}。"
+    invalid_orphan_strategy: "无效的孤儿策略，有效的策略是：:rootify, :adopt, :restrict 和 :destroy。"
+    invalid_ancestry_column: "节点%{node_id}的祖先列格式无效：%{ancestry_column}。"
+    reference_nonexistent_node: "在节点%{node_id}中引用不存在的节点：%{ancestor_id}。"
+    conflicting_parent_id: "在节点%{node_id}中发现冲突的父节点id：%{parent_id}，而期望的是%{expected}"
+    cannot_rebuild_depth_cache: "无法为没有深度缓存的模型重建深度缓存。"
+
+    option_must_be_hash: "has_ancestry的选项必须在哈希中。"
+    unknown_option: "has_ancestry的未知选项：%{key} => %{value}。"
+    unknown_format: "未知的祖先格式：%{value}。"
+
+    exclude_self: "%{class_name}不能是其自身的后代。"
+    cannot_delete_descendants: "因为它有后代，所以无法删除记录。"
+    no_child_for_new_record: "新记录没有子祖先。在执行树操作之前保存记录。"

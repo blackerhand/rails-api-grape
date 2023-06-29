@@ -5,9 +5,9 @@ module Entities
                       :email,
                       :avatar_url,
                       :disabled_at,
-                      :admin?
+                      :type
 
-      expose :roles, using: Entities::Role::List, documentation: { desc: '角色' }
+      expose_with_doc :roles, using: Entities::Role::List
     end
   end
 end

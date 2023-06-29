@@ -32,7 +32,11 @@ class FileObject < ApplicationRecord
     "/v1/files/#{id}"
   end
 
-  def self.find_by_url(url)
+  def real_file_path
+    file.path || "public/#{file_url}"
+  end
+
+  def self.query_by_url(url)
     return unless url.to_s.start_with?(Settings.HOST)
 
     where(id: url.split('/')[-2]).first

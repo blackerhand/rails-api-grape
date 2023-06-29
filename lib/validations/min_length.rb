@@ -1,4 +1,4 @@
-class MinLength < Grape::Validations::Base
+class MinLength < Grape::Validations::Validators::Base
   def validate_param!(attr_name, params)
     return if params[attr_name].to_s.length >= @option
 

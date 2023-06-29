@@ -12,6 +12,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  created_user_id :bigint
+#  grade_id        :bigint
 #  updated_user_id :bigint
 #
 # Indexes
@@ -20,6 +21,5 @@
 #  index_users_on_nickname  (nickname)
 #  index_users_on_type      (type)
 #
-
 class Admin < User
 end

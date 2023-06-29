@@ -2,7 +2,7 @@ source "https://rubygems.org"
 # source 'https://gems.ruby-china.com'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.7.6"
+# ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
@@ -23,6 +23,9 @@ gem 'redis'
 gem 'redis-rails'
 gem 'redis-namespace'
 
+# 敏感词过滤
+gem 'sensitive'
+
 gem 'sidekiq', '~> 6.5'
 gem 'sidekiq-cron', '~> 1.10'
 
@@ -34,9 +37,16 @@ gem 'bcrypt', '~> 3.1.18'
 # gem "pundit", '~> 2.3'
 gem 'rolify', '~> 6.0'
 
+# https://github.com/ruby/net-imap/issues/16
+gem 'net-http', '~> 0.3'
+# gem 'net-smtp'
+# gem 'net-imap'
+gem 'uri', '~> 0.10'
+
 # file
 gem 'carrierwave', '>= 3.0.0.beta', '< 4.0'
-gem "net-http", '~> 0.3'
+gem 'rmagick'
+gem 'data_uri'
 
 gem 'paper_trail', '~> 14.0'
 
@@ -68,6 +78,15 @@ gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-rails'
 
+gem 'kaminari', '~> 1.2'
+gem 'ransack', '~> 4.0'
+gem 'ancestry', '~> 4.3'
+
+gem 'foreman'
+
+# html parse
+gem 'loofah-activerecord'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -79,6 +98,14 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-performance'
+
+  # TDD
+  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'faker'
 end
 
 group :development do
@@ -90,6 +117,7 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano3-puma', github: "seuros/capistrano-puma"
   gem 'capistrano-sidekiq'
+  gem 'capistrano3-nginx', '~> 2.0'
 
   gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'

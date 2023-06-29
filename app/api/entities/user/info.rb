@@ -1,9 +1,11 @@
 module Entities
   module User
     class Info < Base
-      expose_with_doc :nickname, :email, :avatar_url,
+      expose_with_doc :nickname,
+                      :email,
+                      :avatar_url,
                       :disabled_at,
-                      :admin?
+                      :type
     end
   end
 end
