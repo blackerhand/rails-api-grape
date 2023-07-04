@@ -5,6 +5,8 @@ class SignGrape < BaseGrape
   before { parse_jwt! }
 
   # mounts
-  mount V1::UsersGrape => '/v1/users'
   mount V1::FileObjectsGrape => '/v1/files'
+
+  mount UsersGrape
+  mount AdminGrape
 end

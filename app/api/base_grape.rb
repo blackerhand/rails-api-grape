@@ -41,8 +41,6 @@ class BaseGrape < Grape::API
   # add the handle need before this code
   mount SignGrape
   mount PubGrape
-  mount PortalGrape
-  mount AdminGrape
 
   get '/' do
     { status: 'ok' }
