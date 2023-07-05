@@ -15,8 +15,9 @@ module V1
         bool_field :remember, default: false, desc: '记住密码'
       end
       post '/sign_in' do
-        @user = User.find_by(email: declared_params.email)
-        auth_error!('用户名或密码错误') if @user.nil? || !@user.authenticate(declared_params.password)
+        user_params = real_params.user
+        @user = User.find_by(email: user_params.email)
+        auth_error!('用户名或密码错误') if @user.nil? || !@user.authenticate(user_params.password)
 
         update_current_user(@user, params.remember)
         data!(token: JwtSignature.sign(@payload))
