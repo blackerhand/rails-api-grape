@@ -4,7 +4,7 @@ module GRAPE_API
   JWT_REFRESH = Settings.JWT_REFRESH.to_i
 
   # 后台角色
-  SUPER_ADMIN_ROLE_NAME = :SUPER_ADMIN # 超级管理员
+  SUPER_ADMIN_ROLE_NAME    = :SUPER_ADMIN # 超级管理员
   RAILS_SERVE_STATIC_FILES = true
 
   TYPE_LIMIT_LENGTH = 40
@@ -25,8 +25,8 @@ module GRAPE_API
   PER_PAGE   = 15
   SEARCH_PER = 10
 
-  NOT_REQUIRE_LOGIN = %w[post_users_sign_in post_users_sign_up
-                        post_users_reset post_users_send_mail
-                        post_users_sso post_users_sso_f post_users_logout
+  NOT_REQUIRE_LOGIN = %w[post_users_auth_sign_in post_users_auth_sign_up
+                        post_users_auth_reset post_users_auth_send_mail
+                        post_users_auth_sso post_users_auth_sso_f post_users_auth_logout
                         get_files_id]
 end

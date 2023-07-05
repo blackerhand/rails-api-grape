@@ -38,10 +38,6 @@ class BaseGrape < Grape::API
   rescue_from(RecordNotAllowDisabled) { |e| not_allow_error!(e) }
   rescue_from(RecordStateError) { |e| not_allow_error!(e) }
 
-  # add the handle need before this code
-  mount SignGrape
-  mount PubGrape
-
   get '/' do
     { status: 'ok' }
   end
