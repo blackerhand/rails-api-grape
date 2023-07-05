@@ -5,7 +5,7 @@ module V1
       desc '登录' do
         summary '登录'
         detail '登录'
-        tags ['users']
+        tags ['users_auth']
       end
       params do
         requires :user, type: Hash do
