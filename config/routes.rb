@@ -2,6 +2,12 @@
 #
 
 Rails.application.routes.draw do
+  # pub ===
+  mount BaseGrape => '/'
+  mount V1::StaticGrape => '/v1'
+  mount V1::Portal::DashboardGrape => '/v1/portal'
+  mount V1::Portal::PostsGrape => '/v1/portal/posts'
+
   # sign ===
   mount V1::FileObjectsGrape => '/v1/files'
 
@@ -13,11 +19,6 @@ Rails.application.routes.draw do
 
   # users
   mount V1::Users::AuthGrape => '/v1/users/auth'
-
-  # pub ===
-  mount V1::StaticGrape => '/v1'
-  mount V1::Portal::DashboardGrape => '/v1/portal'
-  mount V1::Portal::PostsGrape => '/v1/portal/posts'
 
   require 'sidekiq/web'
   require 'sidekiq/cron/web'
