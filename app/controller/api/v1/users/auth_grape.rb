@@ -1,6 +1,6 @@
 module Api::V1::Users
   # user apis
-  class AuthGrape < Api::SignGrape
+  class AuthGrape < Api::UsersGrape
     desc '登录' do
       summary '登录'
       detail '登录'
