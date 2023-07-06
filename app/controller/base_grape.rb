@@ -37,4 +37,28 @@ class BaseGrape < Grape::API
   # rescue_from(AASM::InvalidTransition) { |_e| not_allow_error!('该条数据当前状态, 不允许变更为选定状态, 请检查') }
   rescue_from(RecordNotAllowDisabled) { |e| not_allow_error!(e) }
   rescue_from(RecordStateError) { |e| not_allow_error!(e) }
+
+  mount Api::PubGrape
+  mount Api::SignGrape
+
+  add_swagger_documentation(
+    mount_path:  '/api/swagger',
+    doc_version: '0.1.0',
+    host:        Settings.HOST.gsub(/(http|https):\/\//, ''),
+    tags:        [
+                   { name: 'static', description: '通用接口' },
+                   { name: 'files', description: '文件' },
+                   { name: 'users_auth', description: '用户登录' },
+                   { name: 'posts', description: '新闻' },
+
+                   # portal
+                   { name: 'portal_dashboard', description: '首页' },
+                   { name: 'portal_posts', description: '新闻' },
+
+                   # admin
+                   { name: 'admin_dashboard', description: 'ADMIN 通用接口, 无需鉴权' },
+                   { name: 'admin_resources', description: '权限管理' },
+                   { name: 'admin_roles', description: '角色管理' },
+                   { name: 'admin_posts', description: '新闻管理' },
+                 ])
 end

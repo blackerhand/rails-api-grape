@@ -1,5 +1,5 @@
-module V1
-  class FileObjectsGrape < SignGrape
+module Api::V1
+  class FileObjectsGrape < Api::SignGrape
     desc '上传内容图片' do
       summary '上传内容图片'
       detail '上传内容图片'

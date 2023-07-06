@@ -1,2 +1,0 @@
-class UsersGrape < SignGrape
-end

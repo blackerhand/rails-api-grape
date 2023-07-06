@@ -3,7 +3,7 @@
 
 Rails.application.routes.draw do
   # pub ===
-  mount RoutesGrape => '/'
+  mount BaseGrape => '/'
 
   require 'sidekiq/web'
   require 'sidekiq/cron/web'

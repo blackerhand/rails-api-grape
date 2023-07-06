@@ -1,6 +1,6 @@
 # 通用接口
-module V1
-  class StaticGrape < PubGrape
+module Api::V1
+  class StaticGrape < Api::PubGrape
     desc '获取枚举字段列表' do
       headers Authorization: {
         description: 'jwt token',
