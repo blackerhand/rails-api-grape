@@ -6,17 +6,19 @@ class CreateFileObjects < ActiveRecord::Migration[7.0]
       t.bigint :fileable_id
       t.string :fileable_type, limit: GRAPE_API::TYPE_LIMIT_LENGTH
 
-      t.string :file # store file
-      t.integer :user_id # 上传人
-      t.string :ext # 文件类型, [pdf, jpeg, jpg, png]
-      t.string :filename # 文件名称: uuid
-      t.string :original_filename # 文件原始名称
-      t.decimal :size # 文件大小
-      t.string :content_digest # 内容 md5
+      t.string :file
+      t.integer :user_id, index: true, comment: '上传人'
+      t.string :ext, limit: 10, comment: '文件后缀'
+      t.string :filename, comment: '文件名称'
+      t.string :original_filename, comment: '原始文件名称'
+      t.decimal :size, precision: 10, scale: 2, comment: '文件大小'
+      t.string :content_digest, comment: '文件内容摘要'
 
       t.bigint :created_user_id
       t.bigint :updated_user_id
-      t.datetime :disabled_at
+      t.datetime :disabled_at, index: true
+
+      t.index [:fileable_id, :fileable_type]
 
       t.timestamps
     end

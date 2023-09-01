@@ -1,9 +1,4 @@
 # frozen_string_literal: true
-
-Grape.configure do |config|
-  config.param_builder = Grape::Extensions::Hashie::Mash::ParamBuilder
-end
-
 module Grape
   # i18n rewrite
   module Exceptions
@@ -63,6 +58,11 @@ module ParamsDsl
     string_field field, opts
   end
 
+  def mobile_field(field, opts = {})
+    opts[:regexp] = GRAPE_API::MOBILE_REGEX
+    string_field field, opts
+  end
+
   def date_field(field, opts = {})
     opts        = default_opts(field).merge(opts)
     opts[:type] = Date
@@ -89,6 +89,13 @@ module ParamsDsl
     render_field(field, opts)
   end
 
+  def decimal_field(field, opts = {})
+    opts        = default_opts(field).merge(opts)
+    opts[:type] = BigDecimal
+
+    render_field(field, opts)
+  end
+
   def bool_field(field, opts = {})
     opts        = default_opts(field).merge(opts)
     opts[:type] = Grape::API::Boolean
@@ -100,6 +107,14 @@ module ParamsDsl
     opts          = default_opts(field).merge(opts)
     opts[:type]   = String
     opts[:values] ||= default_values(field)
+    opts[:values] = opts[:values].map(&:to_s) if opts[:values].present?
+
+    render_field(field, opts)
+  end
+
+  def file_field(field, opts = {})
+    opts        = default_opts(field).merge(opts)
+    opts[:type] = File
 
     render_field(field, opts)
   end
@@ -119,7 +134,7 @@ module ParamsDsl
 
   def default_opts(field)
     {
-      desc:        I18n.t_activerecord(element, field),
+      desc:        I18n.t_activerecord(element.to_s.singularize, field),
       allow_blank: false
     }
   end
@@ -146,4 +161,39 @@ end
 
 class Grape::Validations::ParamsScope
   include ParamsDsl
+end
+
+module Grape
+  module Extensions
+    module Hashie
+      module Mash
+        module ParamBuilder
+          def rack_params
+            deep_strip(super)
+          end
+
+          # delete blank values
+          def deep_strip(hash)
+            hash.each_with_object({}) do |h, result|
+              key   = h[0]
+              value = h[1]
+
+              result[key] =
+                if value.class.to_s == 'Hash'
+                  deep_strip(value)
+                elsif value.class.to_s == 'String'
+                  value.strip.presence
+                else
+                  value
+                end
+            end
+          end
+        end
+      end
+    end
+  end
+end
+
+Grape.configure do |config|
+  config.param_builder = Grape::Extensions::Hashie::Mash::ParamBuilder
 end

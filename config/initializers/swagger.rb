@@ -13,7 +13,7 @@ if Rails.env.production?
 
   GrapeSwaggerRails.options.before_action do |request|
     authenticate_or_request_with_http_basic do |name, password|
-      name == 'admin' && password == '7846e1b0119b18893j41151b280ecdf7'
+      name == 'admin' && password == 'xxxx'
     end
   end
 end

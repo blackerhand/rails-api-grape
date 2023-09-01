@@ -65,7 +65,7 @@ module ErrorHelper
   def meta_error_message(e)
     message =
       if e.is_a?(ActiveRecord::RecordNotFound)
-        "该#{I18n.t("activerecord.models.#{e.model.underscore}")}已被删除, 请刷新页面后重试"
+        "该#{I18n.t("activerecord.models.#{e.model.underscore}")}不存在或状态已变化, 请刷新页面后重试"
       elsif e.respond_to?(:message)
         e.message
       elsif e.is_a?(Hash)

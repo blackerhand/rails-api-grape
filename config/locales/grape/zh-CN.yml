@@ -53,3 +53,4 @@ zh-CN:
         invalid_version_header:
           problem: '无效的 version header'
           resolution: '%{message}'
+        extension_allowlist_error: 不支持该文件类型

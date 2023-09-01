@@ -5,6 +5,8 @@ class CreateAcls < ActiveRecord::Migration[5.2]
       t.bigint :role_id
 
       t.timestamps
+
+      t.index [:role_id, :resource_id]
     end
   end
 end

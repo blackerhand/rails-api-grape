@@ -66,7 +66,7 @@ module DataBuildHelper
   def default_opts
     {
       current_user_id: current_user_id,
-      current_user:    current_user
+      current_user:    current_user,
     }
   end
 
@@ -159,6 +159,16 @@ module DataBuildHelper
     Entities::RecordBase.represent record, opts.merge(glass: entities_class)
   end
 
+  # 转换为 hash, 一般在 service 中使用
+  def entities_hash(record, entities_class, opts = {})
+    return {} if record.blank?
+
+    json_str = entities_class.represent(record, opts).to_json
+    return {} if json_str.blank?
+
+    JSON.parse(json_str)
+  end
+
   def entities_record_no_base(record, entities_class, opts = {})
     opts ||= {}
     entities_class.represent record, opts
@@ -189,15 +199,9 @@ module DataBuildHelper
   def default_meta
     meta                = base_meta
     meta[:payload]      = @payload || {}
-    meta[:current_user] = current_user_info
+    meta[:current_user] = Entities::User::Info.represent current_user
 
     meta
-  end
-
-  def current_user_info
-    return if current_user.blank?
-
-    Entities::User::Info.represent current_user
   end
 
   def pagination(records)

@@ -87,6 +87,13 @@ gem 'foreman'
 # html parse
 gem 'loofah-activerecord'
 
+gem 'aasm'
+
+gem "bugsnag"
+gem "uniform_notifier"
+
+gem 'http_store', '0.5.4', require: true, git: 'https://github.com/blackerhand/http-store.git'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -106,6 +113,8 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'faker'
+  gem 'ffaker', '~> 2.9'
+  gem 'webmock'
 end
 
 group :development do
@@ -125,4 +134,3 @@ group :development do
   # model comment
   gem 'annotate'
 end
-

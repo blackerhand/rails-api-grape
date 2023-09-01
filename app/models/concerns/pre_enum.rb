@@ -12,15 +12,20 @@ module PreEnum
           I18n.t_activerecord(name.underscore, "#{enum_name}_names")
         end
 
-        # Model.enum_type_zh_for_index('选项1')  => 1
+        # Model.enum_type_zh_for_index('option_1')  => 1
         define_singleton_method "#{enum_name}_zh_for_index".to_sym do |index|
           definitions.values.first.select { |_k, v| v.to_s == index.to_s }.keys.first
         end
 
         # object.enum_name => 选项 1
         define_method "#{enum_name}_name".to_sym do
-          field_en = send(enum_name.to_sym).to_sym
-          self.class.send("#{enum_name}_for_select")[field_en]
+          field_en = send(enum_name.to_sym)&.to_sym
+
+          i18ns = self.class.send("#{enum_name}_for_select")
+          return field_en if i18ns.blank?
+          return i18ns if i18ns.is_a?(String)
+
+          i18ns[field_en]
         end
 
         # object.enum_index => 1

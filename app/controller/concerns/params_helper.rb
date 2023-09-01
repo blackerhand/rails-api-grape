@@ -23,7 +23,7 @@ module ParamsHelper
     params[:page] || 1
   end
 
-  def has_params?(key)
+  def params?(key)
     params.key?(key) || declared_params.try(:key?, key)
   end
 

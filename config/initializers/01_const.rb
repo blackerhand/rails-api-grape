@@ -11,6 +11,7 @@ module GRAPE_API
 
   # 正则不允许为空, 设置的时候请注意此字段, 设置 optional 无效
   EMAIL_REGEX  = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+  MOBILE_REGEX = /\A1[3-9]\d{9}\z/
   PASSWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}\z/i # 8 位 字母+数字
 
   # 字符串

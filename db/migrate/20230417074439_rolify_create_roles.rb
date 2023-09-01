@@ -4,12 +4,12 @@ class RolifyCreateRoles < ActiveRecord::Migration[5.2]
       t.string :name, limit: 100
       t.string :name_zh, limit: 100
       t.string :desc
-      t.bigint :resource_id
+      t.bigint :resource_id, index: true
       t.string :resource_type, limit: GRAPE_API::TYPE_LIMIT_LENGTH
 
       t.bigint :created_user_id
       t.bigint :updated_user_id
-      t.datetime :disabled_at
+      t.datetime :disabled_at, index: true
 
       t.timestamps
     end
