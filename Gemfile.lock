@@ -359,10 +359,11 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    ransack (4.0.0)
+    ransack (4.1.1)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
+    ransack-enum (1.0.0)
     redis (4.8.1)
     redis-actionpack (5.3.0)
       actionpack (>= 5, < 8)
@@ -534,7 +535,8 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.0.4)
   rails-i18n (~> 7.0.0)
-  ransack (~> 4.0)
+  ransack (~> 4.1)
+  ransack-enum
   redis
   redis-namespace
   redis-rails
