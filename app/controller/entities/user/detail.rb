@@ -1,11 +1,7 @@
 module Entities
   module User
     class Detail < Base
-      expose_with_doc :nickname,
-                      :email,
-                      :avatar_url,
-                      :disabled_at,
-                      :type
+      include Entities::User::Meta
 
       expose_with_doc :roles, using: Entities::Role::List
     end

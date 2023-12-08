@@ -127,6 +127,13 @@ module ParamsDsl
     render_field(field, opts)
   end
 
+  def array_field(field, opts = {})
+    opts        = default_opts(field).merge(opts)
+    opts[:type] = Array
+
+    render_field(field, opts)
+  end
+
   def auto_field(field, opts = {})
     opts = default_opts(field).merge(opts)
     render_field(field, opts)

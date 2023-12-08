@@ -14,5 +14,11 @@ class ClientRequestError < StandardError; end
 
 class GetIoFormatError < StandardError; end
 
+class WxaError < StandardError; end
+
 # service 前置校验不通过
 class ServiceCheckError < StandardError; end
+
+class WxaPayError < StandardError; end
+
+class RemoteFileGetError < StandardError; end

@@ -1,7 +1,4 @@
 module ApplicationHelper
-  include ParamsHelper
-  include ResourceHelper
-
   def current_user
     return @current_user if @current_user.present?
     return if @payload.blank?
@@ -22,8 +19,16 @@ module ApplicationHelper
     @current_record ||= current_scope.find(params.id)
   end
 
+  def owner_record
+    @owner_record ||= owner_scope.find(params.id)
+  end
+
   def current_scope
     record_class.enabled
+  end
+
+  def owner_scope
+    current_scope.where(owner: current_user)
   end
 
   def upload_file(file_type, params_file)
@@ -32,5 +37,9 @@ module ApplicationHelper
     valid_error!('同一种类型的文件只能上传一个, 请删除后重试') if file_class.enabled.exists?(fileable: current_record)
 
     @file_object = file_class.create!(fileable: current_record, file: params_file)
+  end
+
+  def logger(message)
+    Rails.logger.info("message: #{message}")
   end
 end

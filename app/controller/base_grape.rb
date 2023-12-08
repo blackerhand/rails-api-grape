@@ -9,9 +9,11 @@ class BaseGrape < Grape::API
   require './lib/validations/max_length'
   require './lib/validations/min_length'
   require './lib/validations/sensitive_filter'
+  require './lib/validations/id_card'
 
   helpers ApplicationHelper, ErrorHelper, DataBuildHelper,
-          CacheHelper, FieldHelper
+          CacheHelper, FieldHelper, ValidHelper,
+          ParamsHelper, ResourceHelper
 
   include Grape::Rails::Cache
 
@@ -27,6 +29,7 @@ class BaseGrape < Grape::API
   rescue_from(ActiveRecord::RecordNotFound) { |e| not_found_error!(e) }
 
   # 406
+  # rescue_from(ActiveRecord::RecordNotUnique) { |e| valid_error!(e) }
   rescue_from(ActiveRecord::RecordInvalid) { |e| valid_error!(e) }
   rescue_from(Grape::Exceptions::ValidationErrors) { |e| valid_error!(e) }
   rescue_from(ServiceCheckError) { |e| valid_error!(e) }
@@ -37,6 +40,9 @@ class BaseGrape < Grape::API
   # rescue_from(AASM::InvalidTransition) { |_e| not_allow_error!('该条数据当前状态, 不允许变更为选定状态, 请检查') }
   rescue_from(RecordNotAllowDisabled) { |e| not_allow_error!(e) }
   rescue_from(RecordStateError) { |e| not_allow_error!(e) }
+
+  # 422
+  rescue_from(WxaError) { |e| error_422!(e) }
 
   mount Api::PubGrape
   mount Api::SignGrape

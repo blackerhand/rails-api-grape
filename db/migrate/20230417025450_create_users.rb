@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
 
       t.string :email, limit: 100, comment: '邮箱'
       t.string :nickname, limit: 100, index: true, comment: '昵称'
+      t.integer :gender, limit: 1, comment: '性别'
       t.string :code, limit: 6, comment: '验证码'
       t.string :password_digest
 

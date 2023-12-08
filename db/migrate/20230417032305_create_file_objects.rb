@@ -13,6 +13,7 @@ class CreateFileObjects < ActiveRecord::Migration[7.0]
       t.string :original_filename, comment: '原始文件名称'
       t.decimal :size, precision: 10, scale: 2, comment: '文件大小'
       t.string :content_digest, comment: '文件内容摘要'
+      t.integer :order_index, default: 0, comment: '排序'
 
       t.bigint :created_user_id
       t.bigint :updated_user_id

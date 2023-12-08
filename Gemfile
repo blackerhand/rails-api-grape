@@ -79,7 +79,8 @@ gem 'grape-swagger-entity'
 gem 'grape-swagger-rails'
 
 gem 'kaminari', '~> 1.2'
-gem 'ransack', '~> 4.0'
+gem 'ransack', '~> 4.1'
+gem 'ransack-enum'
 gem 'ancestry', '~> 4.3'
 
 gem 'foreman'
@@ -92,7 +93,7 @@ gem 'aasm'
 gem "bugsnag"
 gem "uniform_notifier"
 
-gem 'http_store', '0.5.4', require: true, git: 'https://github.com/blackerhand/http-store.git'
+gem 'http_store', '0.5.4', require: true, git: 'https://github.com/oldrailser/http-store.git'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
