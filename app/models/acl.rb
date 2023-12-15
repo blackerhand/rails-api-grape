@@ -8,6 +8,10 @@
 #  resource_id :bigint
 #  role_id     :bigint
 #
+# Indexes
+#
+#  index_acls_on_role_id_and_resource_id  (role_id,resource_id)
+#
 class Acl < ApplicationRecord
   belongs_to :role
   belongs_to :resource

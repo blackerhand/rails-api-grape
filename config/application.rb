@@ -49,5 +49,7 @@ module RailsApiGrapeV2
       namespace:  "cache",
       expires_in: 90.minutes
     }
+
+    config.middleware.use HttpStore::Middleware::RequestLog
   end
 end
