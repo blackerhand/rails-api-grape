@@ -1,4 +1,8 @@
+require_relative '../disabled_field'
+
 class CreateFileObjects < ActiveRecord::Migration[7.0]
+  include DisabledField
+
   def change
     create_table :file_objects do |t|
       t.string :type, limit: GRAPE_API::TYPE_LIMIT_LENGTH
@@ -14,14 +18,9 @@ class CreateFileObjects < ActiveRecord::Migration[7.0]
       t.decimal :size, precision: 10, scale: 2, comment: '文件大小'
       t.string :content_digest, comment: '文件内容摘要'
       t.integer :order_index, default: 0, comment: '排序'
-
-      t.bigint :created_user_id
-      t.bigint :updated_user_id
-      t.datetime :disabled_at, index: true
-
       t.index [:fileable_id, :fileable_type]
 
-      t.timestamps
+      disabled_field(t)
     end
   end
 end

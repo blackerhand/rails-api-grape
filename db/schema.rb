@@ -36,6 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_031430) do
     t.datetime "disabled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_user_id"], name: "index_file_objects_on_created_user_id"
     t.index ["disabled_at"], name: "index_file_objects_on_disabled_at"
     t.index ["fileable_id", "fileable_type"], name: "index_file_objects_on_fileable_id_and_fileable_type"
     t.index ["user_id"], name: "index_file_objects_on_user_id"
@@ -102,6 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_031430) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["ancestry"], name: "index_resources_on_ancestry"
+    t.index ["created_user_id"], name: "index_resources_on_created_user_id"
+    t.index ["disabled_at"], name: "index_resources_on_disabled_at"
     t.index ["i18n_title"], name: "index_resources_on_i18n_title", unique: true
     t.index ["key"], name: "index_resources_on_key", unique: true
   end
@@ -117,6 +120,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_031430) do
     t.datetime "disabled_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["created_user_id"], name: "index_roles_on_created_user_id"
     t.index ["disabled_at"], name: "index_roles_on_disabled_at"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true
     t.index ["resource_id"], name: "index_roles_on_resource_id"
@@ -134,6 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_031430) do
     t.datetime "disabled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_user_id"], name: "index_users_on_created_user_id"
     t.index ["disabled_at"], name: "index_users_on_disabled_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["nickname"], name: "index_users_on_nickname"

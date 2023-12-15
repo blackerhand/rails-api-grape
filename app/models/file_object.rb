@@ -22,6 +22,7 @@
 #
 # Indexes
 #
+#  index_file_objects_on_created_user_id                (created_user_id)
 #  index_file_objects_on_disabled_at                    (disabled_at)
 #  index_file_objects_on_fileable_id_and_fileable_type  (fileable_id,fileable_type)
 #  index_file_objects_on_user_id                        (user_id)

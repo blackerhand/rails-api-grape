@@ -1,4 +1,8 @@
+require_relative '../disabled_field'
+
 class CreateResources < ActiveRecord::Migration[5.2]
+  include DisabledField
+
   def change
     create_table :resources do |t|
       t.string :key, limit: 100, comment: '菜单名称', null: false
@@ -12,14 +16,10 @@ class CreateResources < ActiveRecord::Migration[5.2]
       t.integer :platform, default: 1, null: false, comment: '平台'
       t.string :ancestry, limit: 100, index: true
 
-      t.bigint :created_user_id
-      t.bigint :updated_user_id
-      t.datetime :disabled_at
-
       t.index :key, unique: true
       t.index :i18n_title, unique: true
 
-      t.timestamps
+      disabled_field(t)
     end
   end
 end

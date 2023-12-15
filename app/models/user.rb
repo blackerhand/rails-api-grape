@@ -17,10 +17,11 @@
 #
 # Indexes
 #
-#  index_users_on_disabled_at  (disabled_at)
-#  index_users_on_email        (email) UNIQUE
-#  index_users_on_nickname     (nickname)
-#  index_users_on_type         (type)
+#  index_users_on_created_user_id  (created_user_id)
+#  index_users_on_disabled_at      (disabled_at)
+#  index_users_on_email            (email) UNIQUE
+#  index_users_on_nickname         (nickname)
+#  index_users_on_type             (type)
 #
 class User < ApplicationRecord
   include Disable

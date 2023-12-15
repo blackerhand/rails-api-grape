@@ -1,4 +1,8 @@
+require_relative '../disabled_field'
+
 class RolifyCreateRoles < ActiveRecord::Migration[5.2]
+  include DisabledField
+
   def change
     create_table(:roles) do |t|
       t.string :name, limit: 100
@@ -7,11 +11,7 @@ class RolifyCreateRoles < ActiveRecord::Migration[5.2]
       t.bigint :resource_id, index: true
       t.string :resource_type, limit: GRAPE_API::TYPE_LIMIT_LENGTH
 
-      t.bigint :created_user_id
-      t.bigint :updated_user_id
-      t.datetime :disabled_at, index: true
-
-      t.timestamps
+      disabled_field(t)
     end
 
     create_table(:users_roles, :id => false) do |t|
