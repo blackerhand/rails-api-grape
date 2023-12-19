@@ -35,7 +35,8 @@ class Role < ApplicationRecord
   # rubocop:enable Rails/HasAndBelongsToMany
 
   validates :resource_type, inclusion: { in: Rolify.resource_types }, allow_nil: true
-  validates :name, uniqueness: { scope: :resource_id }
+  validates :name, uniqueness: true, if: -> { resource_id.nil? }
+  validates :name_zh, uniqueness: true, if: -> { resource_id.nil? }
 
   before_create :set_default_name_zh
 

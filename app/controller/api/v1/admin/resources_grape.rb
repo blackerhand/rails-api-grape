@@ -1,11 +1,6 @@
 module Api::V1::Admin
   class ResourcesGrape < Api::AdminGrape
-    desc '权限列表' do
-      summary '权限列表'
-      detail '权限列表'
-      tags ['admin_resources']
-      success Entities::Resource::List
-    end
+    swagger_desc('get_admin_resources')
     params do
       bool_field :include_button, optional: true, default: false, desc: '是否包含按钮权限'
     end
@@ -19,12 +14,7 @@ module Api::V1::Admin
       data! ancestry_tree(@resources, Entities::Resource::List)
     end
 
-    desc '新增权限' do
-      summary '新增权限'
-      detail '新增权限'
-      tags ['admin_resources']
-      success Entities::Resource::Detail
-    end
+    swagger_desc('post_admin_resources')
     params do
       requires :resource, type: Hash do
         string_field :key, en: true
@@ -48,22 +38,12 @@ module Api::V1::Admin
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
-      desc '权限详情' do
-        summary '权限详情'
-        detail '权限详情'
-        tags ['admin_resources']
-        success Entities::Resource::DetailWithChildren
-      end
+      base.swagger_desc('get_admin_resources_id')
       get '/' do
         data_record!(current_record, Entities::Resource::DetailWithChildren)
       end
 
-      desc '修改权限' do
-        summary '修改权限'
-        detail '修改权限'
-        tags ['admin_resources']
-        success Entities::Resource::DetailWithChildren
-      end
+      base.swagger_desc('put_admin_resources_id')
       params do
         requires :resource, type: Hash do
           string_field :key, en: true
@@ -87,16 +67,12 @@ module Api::V1::Admin
         data_record!(current_record, Entities::Resource::DetailWithChildren)
       end
 
-      desc '删除权限' do
-        summary '删除权限'
-        detail '删除权限'
-        tags ['admin_resources']
-      end
+      base.swagger_desc('delete_admin_resources_id')
       delete '/' do
         valid_error!('该权限含有子权限, 不能删除') if current_record.children.exists?
 
         current_record.destroy
-        data!('删除成功')
+        data_message!('delete_success')
       end
     end
   end

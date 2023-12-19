@@ -1,0 +1,15 @@
+zh-CN:
+  api:
+    get_admin_menus:
+      summary: '左边栏列表'
+      entity: 'Entities::Resource::Detail'
+    get_admin_check:
+      summary: '验重接口'
+      entity: 'Entities::Resource::Detail'
+    get_admin_resources_id:
+      entity: 'Entities::Resource::DetailWithChildren'
+  messages:
+    delete_success: 删除成功
+    ids_error: id 不正确, 请检查重试
+    cant_modify_super_admin: 不允许修改超级管理员权限
+

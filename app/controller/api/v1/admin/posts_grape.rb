@@ -1,22 +1,12 @@
 module Api::V1::Admin
   class PostsGrape < Api::AdminGrape
-    desc '新闻列表' do
-      summary '新闻列表'
-      detail '新闻列表'
-      tags ['admin_posts']
-      success Entities::Post::List
-    end
+    swagger_desc('get_admin_posts')
     get '/' do
       @posts = Post.enabled.page(params.page).per(page_per)
       data_paginate!(@posts, Entities::Post::List)
     end
 
-    desc '新增新闻' do
-      summary '新增新闻'
-      detail '新增新闻'
-      tags ['admin_posts']
-      success Entities::Post::Detail
-    end
+    swagger_desc('post_admin_posts')
     params do
       requires :post, type: Hash do
         string_field :title
@@ -29,22 +19,12 @@ module Api::V1::Admin
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
-      desc '新闻详情' do
-        summary '新闻详情'
-        detail '新闻详情'
-        tags ['admin_posts']
-        success Entities::Post::Detail
-      end
+      base.swagger_desc('get_admin_posts_id')
       get '/' do
         data_record!(current_record, Entities::Post::Detail)
       end
 
-      desc '修改新闻' do
-        summary '修改新闻'
-        detail '修改新闻'
-        tags ['admin_posts']
-        success Entities::Post::Detail
-      end
+      base.swagger_desc('put_admin_posts_id')
       params do
         requires :post, type: Hash do
           string_field :title
@@ -56,14 +36,10 @@ module Api::V1::Admin
         data_record!(current_record, Entities::Post::Detail)
       end
 
-      desc '删除新闻' do
-        summary '删除新闻'
-        detail '删除新闻'
-        tags ['admin_posts']
-      end
+      base.swagger_desc('delete_admin_posts_id')
       delete '/' do
         current_record.disabled!
-        data!('删除成功')
+        data_message!('delete_success')
       end
     end
   end

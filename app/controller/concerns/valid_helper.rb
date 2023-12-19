@@ -1,8 +1,11 @@
 module ValidHelper
   def valid_ids!(ids, model_class)
-    return true if ids.blank?
+    return [] if ids.blank?
 
-    ids = [ids] unless ids.is_a?(Array)
-    ids.length == model_class.where(id: ids).size
+    ids     = [ids] unless ids.is_a?(Array)
+    records = model_class.where(id: ids)
+    valid_error!("#{I18n.t_activerecord(model_class)} #{I18n.t_message('ids_error')}") unless ids.length == records.size
+
+    records
   end
 end

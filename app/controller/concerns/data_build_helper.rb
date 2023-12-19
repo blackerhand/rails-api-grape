@@ -22,6 +22,10 @@ module DataBuildHelper
     File.read(file_object.real_file_path)
   end
 
+  def data_message!(message)
+    data!(I18n.t_message(message))
+  end
+
   def data!(data, opts = {})
     meta = default_meta
 

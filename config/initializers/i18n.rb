@@ -23,4 +23,15 @@ module I18n
 
     t("errors.messages.#{explanation.underscore.gsub(' ', '_')}", opts)
   end
+
+  def safe_t(key)
+    text = t(key)
+    return if text.to_s.include?('translation missing')
+
+    text
+  end
+
+  def t_message(message)
+    t("messages.#{message.underscore}")
+  end
 end

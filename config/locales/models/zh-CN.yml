@@ -4,6 +4,7 @@ zh-CN:
       role: 角色
       resource: 权限
       user: 用户
+      post: 新闻
     attributes:
       user:
         nickname: 姓名

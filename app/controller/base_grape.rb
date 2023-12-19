@@ -16,6 +16,7 @@ class BaseGrape < Grape::API
           ParamsHelper, ResourceHelper
 
   include Grape::Rails::Cache
+  include SwaggerHelper
 
   # 401
   rescue_from(SignError) { |e| auth_error!(e) }

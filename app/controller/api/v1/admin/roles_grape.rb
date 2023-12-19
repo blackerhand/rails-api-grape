@@ -6,23 +6,13 @@ module Api::V1::Admin
       end
     end
 
-    desc '角色列表' do
-      summary '角色列表'
-      detail '角色列表'
-      tags ['admin_roles']
-      success Entities::Role::List
-    end
+    swagger_desc('get_admin_roles')
     get '/' do
       @roles = current_scope.page(params.page).per(page_per)
       data_paginate!(@roles, Entities::Role::List)
     end
 
-    desc '新增角色' do
-      summary '新增角色'
-      detail '新增角色'
-      tags ['admin_roles']
-      success Entities::Role::Detail
-    end
+    swagger_desc('post_admin_roles')
     params do
       requires :role, type: Hash do
         string_field :name, en: true
@@ -32,30 +22,19 @@ module Api::V1::Admin
       end
     end
     post '/' do
-      valid_error!('权限 id 不正确, 请检查重试') unless Resource.where(id: declared_params.resource_ids).count == declared_params.resource_ids.count
-      valid_error!('角色名称已存在') if Role.exists?(name_zh: declared_params.name_zh)
+      valid_ids!(declared_params.resource_ids, Resource)
 
       @role = Role.create!(declared_params.to_h)
       data_record!(@role, Entities::Role::Detail)
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
-      desc '角色详情' do
-        summary '角色详情'
-        detail '角色详情'
-        tags ['admin_roles']
-        success Entities::Role::Detail
-      end
+      base.swagger_desc('get_admin_roles_id')
       get '/' do
         data_record!(current_record, Entities::Role::Detail)
       end
 
-      desc '修改角色' do
-        summary '修改角色'
-        detail '修改角色'
-        tags ['admin_roles']
-        success Entities::Role::Detail
-      end
+      base.swagger_desc('put_admin_roles_id')
       params do
         requires :role, type: Hash do
           string_field :name, en: true
@@ -65,24 +44,19 @@ module Api::V1::Admin
         end
       end
       put '/' do
-        valid_error!('不允许修改超级管理员权限') unless current_record.can_modify
-        valid_error!('权限 id 不正确, 请检查重试') unless Resource.where(id: declared_params.resource_ids).count == declared_params.resource_ids.count
-        valid_error!('角色名称已存在') if (Role.where(name_zh: declared_params.name_zh).ids - [current_record.id]).present?
+        valid_error!('cant_modify_super_admin') unless current_record.can_modify
+        valid_ids!(declared_params.resource_ids, Resource)
 
         current_record.update!(declared_params.to_h)
         data_record!(current_record, Entities::Role::Detail)
       end
 
-      desc '删除角色' do
-        summary '删除角色'
-        detail '删除角色'
-        tags ['admin_roles']
-      end
+      base.swagger_desc('delete_admin_roles_id')
       delete '/' do
-        valid_error!('不允许修改超级管理员权限') unless current_record.can_modify
+        valid_error!('cant_modify_super_admin') unless current_record.can_modify
 
         current_record.destroy
-        data!('删除成功')
+        data_message!('delete_success')
       end
     end
   end
