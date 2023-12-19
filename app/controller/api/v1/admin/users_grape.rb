@@ -1,11 +1,6 @@
 module Api::V1::Admin
   class UsersGrape < Api::AdminGrape
-    desc '用户列表' do
-      summary '用户列表'
-      detail '用户列表'
-      tags ['admin_users']
-      success Entities::User::Info
-    end
+    swagger_desc('get_admin_users')
     params do
       optional :q, type: Hash do
         string_field :id_eq, optional: true, desc: '用户 ID 等于'
@@ -20,11 +15,7 @@ module Api::V1::Admin
       data_paginate! @users, Entities::User::Info
     end
 
-    desc '新增用户' do
-      summary '新增用户'
-      detail '新增用户'
-      tags ['admin_users']
-    end
+    swagger_desc('post_admin_users')
     params do
       requires :user, type: Hash do
         string_field :nickname
@@ -38,20 +29,12 @@ module Api::V1::Admin
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
-      desc '用户详情' do
-        summary '用户详情'
-        detail '用户详情'
-        tags ['admin_users']
-      end
+      base.swagger_desc('get_admin_users_id')
       get '/' do
         data_record!(current_record, Entities::User::Detail)
       end
 
-      desc '修改用户' do
-        summary '修改用户'
-        detail '修改用户'
-        tags ['admin_users']
-      end
+      base.swagger_desc('put_admin_users_id')
       params do
         requires :user, type: Hash do
           string_field :nickname
@@ -64,14 +47,10 @@ module Api::V1::Admin
         data_record!(current_record, Entities::User::Detail)
       end
 
-      desc '删除用户' do
-        summary '删除用户'
-        detail '删除用户'
-        tags ['admin_users']
-      end
+      base.swagger_desc('delete_admin_users_id')
       delete '/' do
         current_record.disable!
-        data!('删除成功')
+        data_message!('delete_success')
       end
     end
   end

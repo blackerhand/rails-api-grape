@@ -66,7 +66,7 @@ module SwaggerHelper
         "Entities::#{record_class}::List"
       when :show, :update, :destroy, :create
         "Entities::#{record_class}::Detail"
-      end.safe_constantize
+      end.to_s.safe_constantize
     end
   end
 end

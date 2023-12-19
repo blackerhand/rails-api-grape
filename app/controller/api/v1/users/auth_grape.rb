@@ -1,11 +1,7 @@
 module Api::V1::Users
   # user apis
   class AuthGrape < Api::UsersGrape
-    desc '登录' do
-      summary '登录'
-      detail '登录'
-      tags ['users_auth']
-    end
+    swagger_desc('post_users_sign_in')
     params do
       requires :user, type: Hash do
         email_field :email
@@ -22,12 +18,7 @@ module Api::V1::Users
       data!(token: JwtSignature.sign(@payload))
     end
 
-    desc '我的权限列表' do
-      summary '我的权限列表'
-      detail '我的权限列表'
-      tags ['users']
-      success({ code: 200, model: Entities::RecordBase, examples: %w[resource_key1 resource_key2] })
-    end
+    swagger_desc('get_users_my_resources')
     get '/my_resources' do
       @resources    = current_user.resources.select(:id, :key, :platform)
       resource_keys = @resources.each_with_object({}) do |result, resource|

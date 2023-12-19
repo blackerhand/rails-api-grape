@@ -1,11 +1,6 @@
 module Api::V1::Portal
   class PostsGrape < Api::PortalGrape
-    desc '新闻列表页' do
-      summary '新闻列表页'
-      detail '新闻列表页'
-      tags ['portal_posts']
-      success Entities::Post::List
-    end
+    swagger_desc('get_portal_posts')
     params do
       integer_field :page, optional: true
       integer_field :per, optional: true
@@ -16,12 +11,7 @@ module Api::V1::Portal
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
-      desc '新闻详情' do
-        summary '新闻详情'
-        detail '新闻详情'
-        tags ['portal_posts']
-        success Entities::Post::Detail
-      end
+      base.swagger_desc('get_portal_posts_id')
       get '/' do
         current_record.increment!(:click_number)
         data_record!(current_record, Entities::Post::Detail)
