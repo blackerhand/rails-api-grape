@@ -71,7 +71,7 @@ module ErrorHelper
       elsif e.is_a?(Hash)
         e.delete(:message)
       elsif e.is_a?(String)
-        I18n.safe_t(e) || e
+        I18n.t_message(e) || e
       end
 
     message.is_a?(Array) ? message.join(', ') : message

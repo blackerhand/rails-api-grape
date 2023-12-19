@@ -24,7 +24,7 @@ zh-CN:
         download_path: 下载地址
       role:
         name: 角色标识
-        name_zh: 名称
+        name_zh: 角色名称
         desc: 描述
         resource_ids: 权限列表 ID
         can_modify: 是否允许修改

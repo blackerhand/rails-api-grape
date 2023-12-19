@@ -2,6 +2,7 @@ module I18n
   module_function
 
   def t_activerecord(model, attributes = nil)
+    model = model.to_s.underscore
     return 'ID' if attributes.to_s.underscore == 'id'
     return '创建时间' if attributes.to_s == 'created_at'
     return '创建日期' if attributes.to_s == 'created_date'
@@ -32,6 +33,6 @@ module I18n
   end
 
   def t_message(message)
-    t("messages.#{message.underscore}")
+    safe_t("messages.#{message.underscore}")
   end
 end
