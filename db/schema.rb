@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_031430) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
   create_table "acls", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "resource_id"
     t.bigint "role_id"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_031430) do
     t.boolean "cache_response"
     t.integer "response_code"
     t.integer "retry_times"
+    t.index ["client_type"], name: "index_http_logs_on_client_type"
     t.index ["created_at", "client_type"], name: "index_http_logs_on_created_at_and_client_type"
     t.index ["created_at", "response_valid"], name: "index_http_logs_on_created_at_and_response_valid"
     t.index ["request_digest"], name: "index_http_logs_on_request_digest"
