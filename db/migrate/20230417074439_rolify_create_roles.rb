@@ -1,8 +1,4 @@
-require_relative '../disabled_field'
-
-class RolifyCreateRoles < ActiveRecord::Migration[5.2]
-  include DisabledField
-
+class RolifyCreateRoles < ActiveRecord::Migration[7.0]
   def change
     create_table(:roles) do |t|
       t.string :name, limit: 100

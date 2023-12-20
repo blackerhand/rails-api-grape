@@ -13,6 +13,7 @@ module GRAPE_API
   EMAIL_REGEX  = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   MOBILE_REGEX = /\A1[3-9]\d{9}\z/
   PASSWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}\z/i # 8 位 字母+数字
+  LINK_REGEX   = /\A(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\z/i
 
   # 字符串
   MAX_TEXT_LENGTH   = 20000

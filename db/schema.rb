@@ -14,8 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
   create_table "acls", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "resource_id"
     t.bigint "role_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["role_id", "resource_id"], name: "index_acls_on_role_id_and_resource_id"
   end
 
@@ -62,14 +62,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.string "requestable_id", comment: "外键 ID"
     t.string "requestable_type", comment: "外键 类型"
     t.integer "parent_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.bigint "created_user_id"
+    t.bigint "updated_user_id"
+    t.datetime "disabled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "cache_response"
     t.integer "response_code"
     t.integer "retry_times"
     t.index ["client_type"], name: "index_http_logs_on_client_type"
     t.index ["created_at", "client_type"], name: "index_http_logs_on_created_at_and_client_type"
     t.index ["created_at", "response_valid"], name: "index_http_logs_on_created_at_and_response_valid"
+    t.index ["created_user_id"], name: "index_http_logs_on_created_user_id"
+    t.index ["disabled_at"], name: "index_http_logs_on_disabled_at"
     t.index ["request_digest"], name: "index_http_logs_on_request_digest"
   end
 
@@ -83,6 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["click_number"], name: "index_posts_on_click_number"
+    t.index ["created_user_id"], name: "index_posts_on_created_user_id"
     t.index ["disabled_at"], name: "index_posts_on_disabled_at"
     t.index ["title"], name: "index_posts_on_title"
   end
@@ -100,9 +106,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.string "ancestry", limit: 100
     t.bigint "created_user_id"
     t.bigint "updated_user_id"
-    t.datetime "disabled_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "disabled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["ancestry"], name: "index_resources_on_ancestry"
     t.index ["created_user_id"], name: "index_resources_on_created_user_id"
     t.index ["disabled_at"], name: "index_resources_on_disabled_at"
@@ -118,9 +124,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.string "resource_type", limit: 40
     t.bigint "created_user_id"
     t.bigint "updated_user_id"
-    t.datetime "disabled_at", precision: nil
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "disabled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["created_user_id"], name: "index_roles_on_created_user_id"
     t.index ["disabled_at"], name: "index_roles_on_disabled_at"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true

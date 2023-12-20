@@ -12,7 +12,7 @@ module ParamsHelper
   end
 
   def params_q
-    params.q || Hashie::Mash.new
+    real_params.q || Hashie::Mash.new
   end
 
   def page_per

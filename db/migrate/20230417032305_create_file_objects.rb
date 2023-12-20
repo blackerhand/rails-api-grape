@@ -1,8 +1,4 @@
-require_relative '../disabled_field'
-
 class CreateFileObjects < ActiveRecord::Migration[7.0]
-  include DisabledField
-
   def change
     create_table :file_objects do |t|
       t.string :type, limit: GRAPE_API::TYPE_LIMIT_LENGTH

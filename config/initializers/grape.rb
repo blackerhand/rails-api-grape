@@ -58,6 +58,11 @@ module ParamsDsl
     string_field field, opts
   end
 
+  def link_field(field, opts = {})
+    opts[:regexp] = GRAPE_API::LINK_REGEX
+    string_field field, opts
+  end
+
   def mobile_field(field, opts = {})
     opts[:regexp] = GRAPE_API::MOBILE_REGEX
     string_field field, opts

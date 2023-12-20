@@ -1,8 +1,4 @@
-require_relative '../disabled_field'
-
-class CreateResources < ActiveRecord::Migration[5.2]
-  include DisabledField
-
+class CreateResources < ActiveRecord::Migration[7.0]
   def change
     create_table :resources do |t|
       t.string :key, limit: 100, comment: '菜单名称', null: false

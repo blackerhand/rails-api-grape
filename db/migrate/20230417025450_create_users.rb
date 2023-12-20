@@ -1,8 +1,4 @@
-require_relative '../disabled_field'
-
 class CreateUsers < ActiveRecord::Migration[7.0]
-  include DisabledField
-
   def change
     create_table :users do |t|
       t.string :type, index: true, limit: GRAPE_API::TYPE_LIMIT_LENGTH

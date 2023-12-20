@@ -1,4 +1,4 @@
-class CreateAcls < ActiveRecord::Migration[5.2]
+class CreateAcls < ActiveRecord::Migration[7.0]
   def change
     create_table :acls do |t|
       t.bigint :resource_id

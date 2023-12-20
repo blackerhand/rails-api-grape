@@ -1,5 +1,5 @@
 # This migration comes from http_store_engine (originally 1)
-class CreateHttpLogs < ActiveRecord::Migration[5.2]
+class CreateHttpLogs < ActiveRecord::Migration[7.0]
   def change
     create_table "http_logs" do |t|
       # request
@@ -35,7 +35,7 @@ class CreateHttpLogs < ActiveRecord::Migration[5.2]
       t.index [:created_at, :response_valid]
       t.index :request_digest
 
-      t.timestamps
+      disabled_field(t)
     end
   end
 end

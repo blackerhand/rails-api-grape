@@ -14,9 +14,10 @@
 #
 # Indexes
 #
-#  index_posts_on_click_number  (click_number)
-#  index_posts_on_disabled_at   (disabled_at)
-#  index_posts_on_title         (title)
+#  index_posts_on_click_number     (click_number)
+#  index_posts_on_created_user_id  (created_user_id)
+#  index_posts_on_disabled_at      (disabled_at)
+#  index_posts_on_title            (title)
 #
 FactoryBot.define do
   factory :post do
