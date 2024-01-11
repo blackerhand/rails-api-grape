@@ -16,6 +16,10 @@ module Disable
       disabled_at.present?
     end
 
+    def disabled_desc
+      I18n.t("activerecord.attributes.disabled_names.#{enabled? ? 'enabled' : 'disabled'}")
+    end
+
     def disabled!
       raise RecordAlreadyDisabled, '已删除, 不能再次删除' unless enabled?
 

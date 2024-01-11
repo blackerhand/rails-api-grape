@@ -1,14 +1,4 @@
 GIT
-  remote: https://github.com/blackerhand/http-store.git
-  revision: cc40dc3b9faab0ca3ef0a57dbfd668c315e56b1f
-  specs:
-    http_store (0.6.2)
-      activerecord
-      hashie
-      rails
-      rest-client
-
-GIT
   remote: https://github.com/seuros/capistrano-puma.git
   revision: 2cc11846540489edda10d83e026c9bea04e6fab1
   specs:
@@ -233,6 +223,11 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
+    http_store (0.6.5)
+      activerecord
+      hashie
+      rails
+      rest-client
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -518,7 +513,7 @@ DEPENDENCIES
   grape-swagger-rails
   hashie
   hashie-forbidden_attributes
-  http_store (= 0.6.2)!
+  http_store (= 0.6.5)
   jwt (~> 2.1)
   kaminari (~> 1.2)
   loofah-activerecord

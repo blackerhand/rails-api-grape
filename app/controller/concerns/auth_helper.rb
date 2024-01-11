@@ -3,18 +3,20 @@ module AuthHelper
   def parse_current_user
     return if request.headers['Authorization'].blank?
 
-    payload        = JwtSignature.verify!(request.headers['Authorization']).first
-    @current_user  = User.build_with!(payload)
-    @refresh_token = JwtSignature.refresh!(payload)
-    @payload       = payload.merge(@current_user.payload)
+    @payload       = JwtSignature.verify!(request.headers['Authorization']).first
+    @current_user  = User.build_with!(@payload)
+    @refresh_token = JwtSignature.refresh!(@payload)
+
+    # 为了避免重复查询数据库，这里暂不更新 payload, 所以更新权限后需要重新登录
+    # @payload       = payload.merge(@current_user.payload)
   end
 
   def parse_jwt!
     return if not_require_login? && request.headers['Authorization'].blank?
-    raise SignError, '请登录' if request.headers['Authorization'].blank?
+    raise SignError, I18n.t_message('please_login') if request.headers['Authorization'].blank?
 
     parse_current_user
-    raise SignError, '登录失败, 请重新登录' if @current_user.nil?
+    raise SignError, I18n.t_message('login_error') if @current_user.nil?
 
     set_papertrail_user(current_user_id)
   end
@@ -29,10 +31,11 @@ module AuthHelper
 
   def resource_authorize
     return if controller_name.to_s == 'dashboard'
-    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.resources?(action_full_name)
+
+    raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.resources?(action_full_name)
   end
 
   def verify_admin!
-    raise PermissionDeniedError, '你没有权限访问此页面' unless current_user.admin? && current_user.enabled?
+    raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.can_access_admin
   end
 end

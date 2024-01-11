@@ -6,6 +6,11 @@ module Api::V1::Admin
       data! ancestry_tree(@menus, Entities::Resource::Detail)
     end
 
+    swagger_desc('get_admin_resources')
+    get '/resources' do
+      data! current_user.resources.where(platform: 'admin').pluck(:key)
+    end
+
     swagger_desc('get_admin_check')
     params do
       string_field :model_field, type: String, desc: '字段关键字, 例如 resource.name'
@@ -13,7 +18,7 @@ module Api::V1::Admin
     end
     get '/check' do
       model_class, enum_key = tran_model_field(params.model_field)
-      valid_error!('字段不存在, 请检查') if enum_key.blank?
+      valid_error!('field_not_exists') if enum_key.blank?
 
       data!(exists: model_class.exists?(enum_key => params.field_value))
     end

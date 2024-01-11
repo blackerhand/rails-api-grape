@@ -34,7 +34,7 @@ module FormatHelper
   end
 
   # 获取 io 的图片格式
-  def get_imgage_format!(bytes)
+  def get_image_format!(bytes)
     get_format_from_magick(bytes) ||
       get_format_from_match(bytes) ||
       raise(GetIoFormatError, '不支持该文件类型, 请重新上传文件')

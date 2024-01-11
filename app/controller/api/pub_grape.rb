@@ -2,7 +2,10 @@
 module Api
   class PubGrape < BaseGrape
     helpers AuthHelper
-    before { parse_current_user }
+    before do
+      parse_current_user
+      set_locale
+    end
 
     get '/' do
       { status: 'ok' }

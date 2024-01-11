@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_034436) do
   create_table "acls", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "resource_id"
     t.bigint "role_id"
+    t.bigint "created_user_id"
+    t.bigint "updated_user_id"
+    t.datetime "disabled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_user_id"], name: "index_acls_on_created_user_id"
+    t.index ["disabled_at"], name: "index_acls_on_disabled_at"
     t.index ["role_id", "resource_id"], name: "index_acls_on_role_id_and_resource_id"
   end
 
@@ -24,7 +29,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.bigint "fileable_id"
     t.string "fileable_type", limit: 40
     t.string "file"
-    t.integer "user_id", comment: "上传人"
     t.string "ext", limit: 10, comment: "文件后缀"
     t.string "filename", comment: "文件名称"
     t.string "original_filename", comment: "原始文件名称"
@@ -39,7 +43,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.index ["created_user_id"], name: "index_file_objects_on_created_user_id"
     t.index ["disabled_at"], name: "index_file_objects_on_disabled_at"
     t.index ["fileable_id", "fileable_type"], name: "index_file_objects_on_fileable_id_and_fileable_type"
-    t.index ["user_id"], name: "index_file_objects_on_user_id"
+  end
+
+  create_table "global_settings", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "key", comment: "键"
+    t.string "value", comment: "值"
+    t.string "desc", comment: "描述"
+    t.bigint "user_id", comment: "用户ID"
+    t.bigint "created_user_id"
+    t.bigint "updated_user_id"
+    t.datetime "disabled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_user_id"], name: "index_global_settings_on_created_user_id"
+    t.index ["disabled_at"], name: "index_global_settings_on_disabled_at"
+    t.index ["key", "user_id"], name: "index_global_settings_on_key_and_user_id", unique: true
+    t.index ["user_id"], name: "index_global_settings_on_user_id"
   end
 
   create_table "http_logs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -56,20 +75,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.integer "status_code", comment: "response http code"
     t.text "response", comment: "response body"
     t.text "response_headers", comment: "response header"
+    t.integer "cache_response", comment: "是否缓存请求"
+    t.integer "response_code", comment: "response code"
+    t.integer "retry_times", comment: "重试次数"
     t.boolean "response_valid", comment: "请求结果 true/false, 这个要根据业务逻辑来设定. 不能靠 status_code 来确定"
     t.text "response_data", comment: "格式化后的 response"
     t.string "client_type", limit: 80, comment: "请求类型"
     t.string "requestable_id", comment: "外键 ID"
     t.string "requestable_type", comment: "外键 类型"
     t.integer "parent_id"
+    t.boolean "is_system", default: false, comment: "是否系统请求"
     t.bigint "created_user_id"
     t.bigint "updated_user_id"
-    t.datetime "disabled_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "cache_response"
-    t.integer "response_code"
-    t.integer "retry_times"
+    t.datetime "disabled_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["client_type"], name: "index_http_logs_on_client_type"
     t.index ["created_at", "client_type"], name: "index_http_logs_on_created_at_and_client_type"
     t.index ["created_at", "response_valid"], name: "index_http_logs_on_created_at_and_response_valid"
@@ -97,7 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.string "key", limit: 100, null: false, comment: "菜单名称"
     t.string "i18n_title", limit: 100, comment: "菜单中文名称"
     t.string "router_path", limit: 100, comment: "路由"
-    t.boolean "keep_alive", default: true, null: false, comment: "页面保持"
+    t.boolean "keep_alive", default: false, null: false, comment: "页面保持"
     t.string "icon", limit: 100, comment: "图标"
     t.boolean "hide", default: true, null: false, comment: "是否隐藏"
     t.integer "order_index", default: 1, null: false, comment: "排序"
@@ -122,11 +142,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_025046) do
     t.string "desc"
     t.bigint "resource_id"
     t.string "resource_type", limit: 40
+    t.integer "base_role_id"
     t.bigint "created_user_id"
     t.bigint "updated_user_id"
     t.datetime "disabled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["base_role_id"], name: "index_roles_on_base_role_id"
     t.index ["created_user_id"], name: "index_roles_on_created_user_id"
     t.index ["disabled_at"], name: "index_roles_on_disabled_at"
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true

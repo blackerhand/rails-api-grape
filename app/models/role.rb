@@ -10,12 +10,14 @@
 #  resource_type   :string(40)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  base_role_id    :integer
 #  created_user_id :bigint
 #  resource_id     :bigint
 #  updated_user_id :bigint
 #
 # Indexes
 #
+#  index_roles_on_base_role_id                            (base_role_id)
 #  index_roles_on_created_user_id                         (created_user_id)
 #  index_roles_on_disabled_at                             (disabled_at)
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id) UNIQUE
@@ -35,8 +37,8 @@ class Role < ApplicationRecord
   # rubocop:enable Rails/HasAndBelongsToMany
 
   validates :resource_type, inclusion: { in: Rolify.resource_types }, allow_nil: true
-  validates :name, uniqueness: true, if: -> { resource_id.nil? }
-  validates :name_zh, uniqueness: true, if: -> { resource_id.nil? }
+  validates :name, presence: true, uniqueness: { scope: %i[resource_type resource_id] }
+  validates :name_zh, uniqueness: { scope: %i[resource_type resource_id] }
 
   before_create :set_default_name_zh
 
@@ -44,12 +46,11 @@ class Role < ApplicationRecord
     name.to_s.to_sym != GRAPE_API::SUPER_ADMIN_ROLE_NAME
   end
 
-  # 获取单个关联对象角色的通用角色 (pure_roles)
   # 在通用角色上设置用户的权限
   def base_role
     return self if resource_id.nil?
 
-    self.class.find_or_create_by!(name: name, resource: nil, name_zh: default_name_zh)
+    self.class.find_or_create_by!(name: name, resource: nil)
   end
 
   private
@@ -64,6 +65,7 @@ class Role < ApplicationRecord
   end
 
   def set_default_name_zh
-    self.name_zh = default_name_zh if name_zh.blank?
+    self.name_zh      = default_name_zh if name_zh.blank?
+    self.base_role_id = base_role.id if resource_id.present?
   end
 end

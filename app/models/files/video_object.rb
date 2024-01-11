@@ -26,7 +26,7 @@
 #  index_file_objects_on_fileable_id_and_fileable_type  (fileable_id,fileable_type)
 #
 module Files
-  class Avatar < ImageObject
-    mount_uploader :file, AvatarUploader
+  class VideoObject < FileObject
+    mount_uploader :file, VideoUploader
   end
 end

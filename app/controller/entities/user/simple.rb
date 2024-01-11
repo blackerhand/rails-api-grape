@@ -1,6 +1,6 @@
 module Entities
   module User
-    class Info < Base
+    class Simple < Base
       include Entities::User::Meta
     end
   end

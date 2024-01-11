@@ -30,6 +30,7 @@ class User < ApplicationRecord
 
   has_one :files_avatar, class_name: 'Files::Avatar', as: :fileable, dependent: :destroy
   validates :email, presence: true, uniqueness: true
+  before_create :set_default_type
   after_create :create_files_avatar!
 
   def self.ransackable_attributes(_auth_object = nil)
@@ -42,8 +43,12 @@ class User < ApplicationRecord
   end
 
   def remove_resource_role(role_name, resource)
-    remove_role(role_name)
-    remove_role(role_name, resource) unless roles.resource_roles.exists?(name: role_name)
+    remove_role(role_name, resource)
+    remove_role(role_name) unless roles.resource_roles.exists?(name: role_name)
+  end
+
+  def type_desc
+    GRAPE_API::USER_TYPE_DESC[type.to_s.to_sym]
   end
 
   # 管理员
@@ -61,6 +66,7 @@ class User < ApplicationRecord
     super_admin? || resource_keys.include?(resource_key)
   end
 
+  # 获取 pure role resources
   def resources
     @resources ||=
       if super_admin?
@@ -74,8 +80,30 @@ class User < ApplicationRecord
     @resource_keys ||= resources.pluck(:key).uniq
   end
 
+  # resource roles
+  def record_resources(record)
+    return Resource.all if super_admin?
+
+    base_role_ids = roles.where(resource: record).pluck(:base_role_id)
+    return Resource.where(id: nil) if base_role_ids.blank?
+
+    Resource.joins(:acls).where(acls: { role_id: base_role_ids })
+  end
+
+  def record_resource_keys(record)
+    record_resources(record).pluck(:key).uniq
+  end
+
+  def record_resources?(record, resource_key)
+    super_admin? || record_resource_keys(record).include?(resource_key)
+  end
+
+  def settings
+    @settings ||= GlobalSetting.settings(id)
+  end
+
   def payload
-    slice(:id, :type)
+    slice(:id, :type, :settings)
   end
 
   def avatar_url
@@ -85,7 +113,7 @@ class User < ApplicationRecord
   def self.build_with!(payload = {})
     payload = Hashie::Mash.new(payload) rescue Hashie::Mash.new
     user = find_by(id: payload.id)
-    raise SignError, '用户不存在, 请重新登录' if user.nil?
+    I18n.t_message('user_not_exists') if user.nil?
 
     user
   end
@@ -93,5 +121,13 @@ class User < ApplicationRecord
   def gen_code!
     update!(code: rand(999_999).to_s.rjust(6, '0'))
     code
+  end
+
+  private
+
+  def set_default_type
+    return if type.present?
+
+    self.type = 'User'
   end
 end

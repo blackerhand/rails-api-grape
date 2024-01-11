@@ -4,7 +4,7 @@ class CreateAcls < ActiveRecord::Migration[7.0]
       t.bigint :resource_id
       t.bigint :role_id
 
-      t.timestamps
+      disabled_field(t)
 
       t.index [:role_id, :resource_id]
     end

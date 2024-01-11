@@ -8,7 +8,7 @@
 #  hide(是否隐藏)           :boolean          default(TRUE), not null
 #  i18n_title(菜单中文名称) :string(100)
 #  icon(图标)               :string(100)
-#  keep_alive(页面保持)     :boolean          default(TRUE), not null
+#  keep_alive(页面保持)     :boolean          default(FALSE), not null
 #  key(菜单名称)            :string(100)      not null
 #  menu_type(菜单类型)      :integer          default("button"), not null
 #  order_index(排序)        :integer          default(1), not null
@@ -44,8 +44,4 @@ class Resource < ApplicationRecord
 
   pre_enum menu_type: { menu: 1, button: 2 }, _prefix: true
   pre_enum platform: { admin: 1, teacher: 2, student: 3 }, _prefix: true
-
-  def name
-    router_path.to_s.gsub(/\A\//, '').tr('/', '_')
-  end
 end

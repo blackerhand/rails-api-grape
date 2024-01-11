@@ -4,12 +4,14 @@ zh-CN:
       summary: '左边栏列表'
       entity: 'Entities::Resource::Detail'
     get_admin_check:
-      summary: '验重接口'
+      summary: '验证字段是否重复'
       entity: 'Entities::Resource::Detail'
+    get_admin_resources:
+      summary: '权限列表'
     get_admin_resources_id:
       entity: 'Entities::Resource::DetailWithChildren'
     get_admin_users:
-      entity: 'Entities::User::Info'
+      entity: 'Entities::User::Simple'
     get_portal:
       summary: '首页'
     post_users_sign_in:
@@ -18,8 +20,25 @@ zh-CN:
       summary: '我的权限'
     post_file_object_content_img:
       summary: '上传内容图片'
+    post_users_auth_logout:
+      summary: '退出登录'
+    get_http_logs:
+      summary: '日志列表'
+    put_users_global_settings:
+      summary: '修改用户设置'
+      entity: 'Entities::GlobalSetting::List'
   messages:
+    success: 请求成功
     delete_success: 删除成功
     ids_error: id 不正确, 请检查重试
     cant_modify_super_admin: 不允许修改超级管理员权限
-
+    jwt_expired_error: 登录已过期, 请重新登录
+    jwt_decode_error: '登录失败, 请重试'
+    http_log_request_error: '请求失败'
+    http_log_request_success: '请求成功'
+    page_no_permission: '您没有权限访问此页面'
+    course_not_found: '课程不存在'
+    please_login: '请登录'
+    login_error: '登录失败, 请重试'
+    field_not_exists: '字段不存在'
+    user_not_exists: '用户不存在'

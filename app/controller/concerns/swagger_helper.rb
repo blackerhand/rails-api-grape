@@ -26,17 +26,15 @@ module SwaggerHelper
     end
 
     def action_type(action_name)
-      actions       = action_name.to_s.split('_')
-      action_method = actions.first
-      action_last   = actions.last
+      action_method = action_name.to_s.split('_').first
 
-      if action_last == 'id'
+      if action_name.match(/_id$/)
         return :show if action_method == 'get'
         return :update if action_method == 'put'
         return :destroy if action_method == 'delete'
       end
 
-      if action_last.singularize.classify == record_class.to_s
+      if action_name.match(/_#{record_class.to_s.underscore.pluralize}$/)
         return :index if action_method == 'get'
         return :create if action_method == 'post'
       end

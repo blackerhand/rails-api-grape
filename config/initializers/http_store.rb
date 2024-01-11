@@ -1,3 +1,4 @@
 # HttpStore Config
-HttpStore.configure do
+HttpStore.configure do |config|
+  config.store_class = 'HttpLog'
 end

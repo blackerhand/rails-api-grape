@@ -18,20 +18,20 @@
 #  created_user_id                 :bigint
 #  fileable_id                     :bigint
 #  updated_user_id                 :bigint
-#  user_id(上传人)                 :integer
 #
 # Indexes
 #
 #  index_file_objects_on_created_user_id                (created_user_id)
 #  index_file_objects_on_disabled_at                    (disabled_at)
 #  index_file_objects_on_fileable_id_and_fileable_type  (fileable_id,fileable_type)
-#  index_file_objects_on_user_id                        (user_id)
 #
 class FileObject < ApplicationRecord
   include Disable
 
+  scope :not_association, -> { where(fileable: nil) }
+  scope :not_association_by_owner, ->(owner_id) { where(created_user_id: owner_id, fileable: nil) }
+
   belongs_to :fileable, polymorphic: true, optional: true
-  belongs_to :user, optional: true
   mount_uploader :file, FileUploader
 
   before_create :set_file_attrs
@@ -42,6 +42,10 @@ class FileObject < ApplicationRecord
 
   def real_file_path
     file.path || "public/#{file_url}"
+  end
+
+  def full_url
+    Settings.HOST + file_url
   end
 
   def self.query_by_url(url)

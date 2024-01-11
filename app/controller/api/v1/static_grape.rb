@@ -34,5 +34,18 @@ module Api::V1
 
       data! result
     end
+
+    desc '获取全局配置' do
+      headers Authorization: {
+        description: 'jwt token',
+        required:    true
+      }
+      summary '获取全局配置'
+      detail 'get_global_settings'
+      tags ['static']
+    end
+    get '/global_settings' do
+      data! GlobalSetting.settings(current_user)
+    end
   end
 end

@@ -15,6 +15,14 @@ module ApplicationHelper
     current_user.try(:id)
   end
 
+  def set_locale
+    locale = params[:locale] ||
+      @payload.try(:[], 'settings').try(:[], 'locale')
+    return if locale.blank?
+
+    I18n.locale = locale
+  end
+
   def current_record
     @current_record ||= current_scope.find(params.id)
   end

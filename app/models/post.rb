@@ -23,5 +23,5 @@ class Post < ApplicationRecord
   include Disable
   include HtmlField
 
-  html_field :desc, Files::ContentImg
+  html_field :desc, Files::ContentImg, Files::ContentVideo
 end

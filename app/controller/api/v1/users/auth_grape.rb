@@ -18,15 +18,24 @@ module Api::V1::Users
       data!(token: JwtSignature.sign(@payload))
     end
 
-    swagger_desc('get_users_my_resources')
-    get '/my_resources' do
-      @resources    = current_user.resources.select(:id, :key, :platform)
-      resource_keys = @resources.each_with_object({}) do |result, resource|
-        resource[result.platform] ||= []
-        resource[result.platform] << result.key
-      end
+    swagger_desc('refresh_token')
+    get 'refresh_token' do
+      data!(token: JwtSignature.sign(@payload))
+    end
 
-      data! resource_keys
+    swagger_desc('put_users_global_settings')
+    params do
+      requires :global_setting, type: Hash do
+        string_field :key
+        string_field :value
+      end
+    end
+    put '/global_settings' do
+      GlobalSetting.set(key:     params.global_setting[:key],
+                        value:   params.global_setting[:value],
+                        user_id: current_user_id)
+
+      data_message!('success')
     end
 
     # desc '注册' do

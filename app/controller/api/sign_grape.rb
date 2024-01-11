@@ -3,7 +3,10 @@ module Api
   class SignGrape < BaseGrape
     helpers AuthHelper
 
-    before { parse_jwt! }
+    before do
+      parse_jwt!
+      set_locale
+    end
 
     mount Api::V1::FileObjectsGrape => '/v1/files'
     mount Api::UsersGrape

@@ -151,6 +151,16 @@ module DataBuildHelper
     }
   end
 
+  def data_records!(records, entities_class, meta = {})
+    opts = meta.delete(:opts) || {}
+    opts.merge!(default_opts)
+
+    {
+      meta: default_meta.merge(meta),
+      data: json_records!(records, entities_class, opts)
+    }
+  end
+
   def json_records!(records, entities_class, opts = {})
     return if records.nil?
 
@@ -192,7 +202,7 @@ module DataBuildHelper
   def base_meta
     request = Grape::Request.new(env)
     {
-      message:       '请求成功',
+      message:       I18n.t_message('success'),
       path:          request.path,
       status:        200,
       refresh_token: @refresh_token,
@@ -203,7 +213,7 @@ module DataBuildHelper
   def default_meta
     meta                = base_meta
     meta[:payload]      = @payload || {}
-    meta[:current_user] = Entities::User::Info.represent current_user
+    meta[:current_user] = Entities::User::Simple.represent current_user
 
     meta
   end

@@ -8,14 +8,8 @@ module Entities
                         :email,
                         :avatar_url,
                         :disabled_at,
-                        :type,
-                        :gender,
-                        :gender_name,
-                        :school_id,
-                        :can_login,
-                        :mask_phone
-
-        expose :rider?, as: :is_rider
+                        :disabled_desc,
+                        :type
       end
     end
   end

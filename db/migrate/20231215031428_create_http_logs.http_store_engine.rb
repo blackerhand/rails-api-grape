@@ -1,5 +1,5 @@
 # This migration comes from http_store_engine (originally 1)
-class CreateHttpLogs < ActiveRecord::Migration[7.0]
+class CreateHttpLogs < ActiveRecord::Migration[5.2]
   def change
     create_table "http_logs" do |t|
       # request
@@ -20,16 +20,20 @@ class CreateHttpLogs < ActiveRecord::Migration[7.0]
       t.integer :status_code, comment: 'response http code'
       t.text :response, comment: 'response body'
       t.text :response_headers, comment: 'response header'
+      t.integer :cache_response, comment: '是否缓存请求'
+      t.integer :response_code, comment: 'response code'
+      t.integer :retry_times, comment: '重试次数'
 
       # response checker
       t.boolean :response_valid, comment: '请求结果 true/false, 这个要根据业务逻辑来设定. 不能靠 status_code 来确定'
       t.text :response_data, comment: '格式化后的 response'
 
       # relation
-      t.string :client_type, limit: 80, comment: '请求类型'
+      t.string :client_type, index: true, limit: 80, comment: '请求类型'
       t.string :requestable_id, comment: '外键 ID'
       t.string :requestable_type, comment: '外键 类型'
       t.integer :parent_id
+      t.boolean :is_system, default: false, comment: '是否系统请求'
 
       t.index [:created_at, :client_type]
       t.index [:created_at, :response_valid]

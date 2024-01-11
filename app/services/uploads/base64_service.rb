@@ -10,7 +10,7 @@ module Uploads
       result         = format_data_uri(@base64_str)
       url_ext, bytes = result if result
       bytes          ||= Base64.decode64(@base64_str)
-      url_ext        ||= get_imgage_format!(bytes)
+      url_ext        ||= get_image_format!(bytes)
 
       temp_file = Tempfile.create([file_name, ".#{url_ext}"])
       temp_file.write bytes.force_encoding('UTF-8')

@@ -18,14 +18,12 @@
 #  created_user_id                 :bigint
 #  fileable_id                     :bigint
 #  updated_user_id                 :bigint
-#  user_id(上传人)                 :integer
 #
 # Indexes
 #
 #  index_file_objects_on_created_user_id                (created_user_id)
 #  index_file_objects_on_disabled_at                    (disabled_at)
 #  index_file_objects_on_fileable_id_and_fileable_type  (fileable_id,fileable_type)
-#  index_file_objects_on_user_id                        (user_id)
 #
 module Files
   class ContentImg < ImageObject

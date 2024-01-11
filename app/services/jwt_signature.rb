@@ -10,9 +10,9 @@ module JwtSignature
     token.gsub!(/^Bearer /, '') if token.to_s.start_with?('Bearer ')
     JWT.decode token, Settings.JWT_SECRET, true, algorithm: 'HS256'
   rescue JWT::ExpiredSignature
-    raise SignError, '登录已失效, 请重新登录'
+    raise SignError, I18n.t_message('jwt_expired_error')
   rescue JWT::DecodeError
-    raise SignError, '登录失败, 请重试'
+    raise SignError, I18n.t_message('jwt_decode_error')
   end
 
   def sign(payload)
@@ -26,7 +26,7 @@ module JwtSignature
 
   def refresh?(payload)
     token_create_time = Time.zone.at(payload['exp']) - exp_seconds(payload)
-    token_create_time - Time.current.to_i > GRAPE_API::JWT_REFRESH
+    Time.current - token_create_time > GRAPE_API::JWT_REFRESH
   end
 
   def refresh!(payload)
