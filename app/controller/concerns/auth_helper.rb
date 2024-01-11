@@ -35,6 +35,18 @@ module AuthHelper
     raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.resources?(action_full_name)
   end
 
+  def verify_access!(platform)
+    can_access =
+      case platform
+      when 'admin'
+        current_user.can_access_admin
+      else
+        false
+      end
+
+    raise PermissionDeniedError, I18n.t_message('page_no_permission') unless can_access
+  end
+
   def verify_admin!
     raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.can_access_admin
   end

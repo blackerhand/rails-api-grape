@@ -4,8 +4,7 @@ module Api
     helpers AuthHelper
 
     before do
-      parse_jwt!
-      verify_admin!
+      verify_access!('admin')
       resource_authorize
     end
 

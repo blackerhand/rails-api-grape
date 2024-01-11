@@ -212,7 +212,7 @@ module DataBuildHelper
 
   def default_meta
     meta                = base_meta
-    meta[:payload]      = @payload || {}
+    # meta[:payload]      = @payload || {}
     meta[:current_user] = Entities::User::Simple.represent current_user
 
     meta

@@ -58,12 +58,56 @@ class User < ApplicationRecord
 
   # 超级管理员
   def super_admin?
-    has_role?(GRAPE_API::SUPER_ADMIN_ROLE_NAME)
+    return @super_admin if defined?(@super_admin)
+
+    @super_admin = has_role?(GRAPE_API::SUPER_ADMIN_ROLE_NAME)
   end
 
   # 超级管理员默认拥有所有权限，非超级管理员需要判断对于该资源是否有权限
   def resources?(resource_key)
     super_admin? || resource_keys.include?(resource_key)
+  end
+
+  def record_resources?(record, resource_key)
+    super_admin? || record_resource_keys(record).include?(resource_key)
+  end
+
+  def can_access_admin
+    enabled? && admin?
+  end
+
+  def settings
+    @settings ||= GlobalSetting.settings(id)
+  end
+
+  def payload
+    slice(:id, :type, :settings,
+          :can_access_admin,)
+  end
+
+  def avatar_url
+    files_avatar.file_url
+  end
+
+  def self.build_with!(payload = {})
+    payload = Hashie::Mash.new(payload) rescue Hashie::Mash.new
+    user = find_by(id: payload.id)
+    I18n.t_message('user_not_exists') if user.nil?
+
+    user
+  end
+
+  def gen_code!
+    update!(code: rand(999_999).to_s.rjust(6, '0'))
+    code
+  end
+
+  private
+
+  def set_default_type
+    return if type.present?
+
+    self.type = 'User'
   end
 
   # 获取 pure role resources
@@ -92,42 +136,5 @@ class User < ApplicationRecord
 
   def record_resource_keys(record)
     record_resources(record).pluck(:key).uniq
-  end
-
-  def record_resources?(record, resource_key)
-    super_admin? || record_resource_keys(record).include?(resource_key)
-  end
-
-  def settings
-    @settings ||= GlobalSetting.settings(id)
-  end
-
-  def payload
-    slice(:id, :type, :settings)
-  end
-
-  def avatar_url
-    files_avatar.file_url
-  end
-
-  def self.build_with!(payload = {})
-    payload = Hashie::Mash.new(payload) rescue Hashie::Mash.new
-    user = find_by(id: payload.id)
-    I18n.t_message('user_not_exists') if user.nil?
-
-    user
-  end
-
-  def gen_code!
-    update!(code: rand(999_999).to_s.rjust(6, '0'))
-    code
-  end
-
-  private
-
-  def set_default_type
-    return if type.present?
-
-    self.type = 'User'
   end
 end

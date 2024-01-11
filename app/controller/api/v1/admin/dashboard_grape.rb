@@ -8,7 +8,11 @@ module Api::V1::Admin
 
     swagger_desc('get_admin_resources')
     get '/resources' do
-      data! current_user.resources.where(platform: 'admin').pluck(:key)
+      resource_keys = current_user.send(:resources)
+                                  .where(platform: 'admin')
+                                  .pluck(:key).uniq
+
+      data!(resource_keys)
     end
 
     swagger_desc('get_admin_check')
