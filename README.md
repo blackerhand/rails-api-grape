@@ -15,12 +15,11 @@
 - rolify
 - capistrano
                       
-# 项目优势
-        
+# 项目功能
+
+### 极简 CRUD
 
 ```ruby 
-# 极简 CRUD
-
 # swagger 文档自动生成
 swagger_desc('post_admin_posts')
 
@@ -66,6 +65,9 @@ route_param :id, requirements: { id: /[0-9]+/ } do
   end
 end
 ```
+
+### 自动 swagger
+![swagger](./doc/swagger.png)
 
 # 项目配置
 
