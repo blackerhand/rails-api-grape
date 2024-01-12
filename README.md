@@ -21,6 +21,13 @@
 主打的就是没有废话, 废代码. 有了这个开发速度提升 1 倍, 可以安心的摸鱼了
 
 ```ruby 
+# 列表
+swagger_desc('get_admin_posts')
+get '/' do
+  @posts = Post.enabled.page(params.page).per(page_per)
+  data_paginate!(@posts, Entities::Post::List)
+end
+
 # swagger 文档自动生成
 swagger_desc('post_admin_posts')
 
@@ -32,7 +39,7 @@ params do
   end
 end
 
-# 列表页逻辑
+# 创建
 post '/' do
   @post = Post.create!(declared_params.to_h)
   data_record!(@post, Entities::Post::Detail)
