@@ -7,11 +7,14 @@ module DisabledField
     t.timestamps
   end
 
-  def string_100_field(t, name, comment, index: false)
-    t.string name, limit: 100, index: index, comment: comment
-  end
+  def channel_field(t, unique = true)
+    t.integer :channel, default: 0, comment: '来源'
+    t.string :channel_id, index: true, comment: '来源 id'
+    t.text :original_data, comment: '原始数据'
+    t.datetime :synced_at, comment: '同步时间'
 
-  def string_40_field(t, name, index: false)
-    t.string name, limit: 40, index: index, comment: comment
+    if unique
+      t.index [:channel, :channel_id], unique: true
+    end
   end
 end

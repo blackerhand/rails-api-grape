@@ -3,16 +3,7 @@ module Api::V1::Admin
     swagger_desc('get_admin_menus')
     get '/menus' do
       @menus = current_user.resources.admin_menus.arrange
-      data! ancestry_tree(@menus, Entities::Resource::Detail)
-    end
-
-    swagger_desc('get_admin_resources')
-    get '/resources' do
-      resource_keys = current_user.send(:resources)
-                                  .where(platform: 'admin')
-                                  .pluck(:key).uniq
-
-      data!(resource_keys)
+      data! ancestry_tree(@menus, namespace: 'List')
     end
 
     swagger_desc('get_admin_check')

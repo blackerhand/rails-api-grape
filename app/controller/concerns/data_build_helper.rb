@@ -69,129 +69,114 @@ module DataBuildHelper
 
   def default_opts
     {
-      current_user_id: current_user_id,
-      current_user:    current_user,
+      current_user: current_user,
+      params:       params
     }
   end
 
-  def data_paginate!(records, entities_class, meta = {})
-    opts = meta.delete(:opts) || {}
+  def data_paginate!(records, opts = {})
+    meta = opts.delete(:meta) || {}
     opts.merge!(default_opts)
 
     {
       meta: default_meta.merge(pagination(records)).merge(meta),
-      data: json_records!(records, entities_class, opts)
+      data: json_records!(records, opts)
     }
   end
 
-  def format_file_values(filed_values)
-    filed_values.map do |filed_value|
-      case filed_value
-      when Array
-        filed_value.join(',')
-      when TrueClass
-        '是'
-      when FalseClass
-        '否'
-      else
-        filed_value
-      end
-    end
-  end
+  # def format_file_values(filed_values)
+  #   filed_values.map do |filed_value|
+  #     case filed_value
+  #     when Array
+  #       filed_value.join(',')
+  #     when TrueClass
+  #       '是'
+  #     when FalseClass
+  #       '否'
+  #     else
+  #       filed_value
+  #     end
+  #   end
+  # end
 
-  def data_ransack_file!(records, entities_class, opts = {})
-    thead = opts.delete(:thead)
-    thead.push('创建时间')
+  # def data_ransack_file!(records, entities_class, opts = {})
+  #   thead = opts.delete(:thead)
+  #   thead.push('创建时间')
+  #
+  #   file_name       = opts.delete(:file_name) || 'export'
+  #   opts[:use_base] = false
+  #
+  #   data = opts.delete(:data) || file_records!(records, entities_class, opts).as_json
+  #   p    = Axlsx::Package.new
+  #
+  #   p.workbook.add_worksheet(name: '数据列表') do |sheet|
+  #     types  = Array.new(thead.length, :string)
+  #     widths = Array.new(thead.length, 13)
+  #
+  #     sheet.add_row thead, widths: widths, height: 30, sz: 13 if thead.present?
+  #
+  #     data.each do |row|
+  #       row.delete(:id) if opts[:without_id]
+  #
+  #       sheet.add_row format_file_values(row.values), widths: widths, types: types, height: 30, sz: 12
+  #     end
+  #   end
+  #
+  #   p.use_shared_strings = true
+  #
+  #   content_type 'application/octet-stream'
+  #   header['Access-Control-Expose-Headers'] = 'Content-Disposition'
+  #   header['Content-Disposition']           = "attachment; filename=#{ERB::Util.url_encode(file_name)}.xlsx"
+  #   env['api.format']                       = :binary
+  #   p.to_stream.read
+  # end
 
-    file_name       = opts.delete(:file_name) || 'export'
-    opts[:use_base] = false
+  # def file_records!(records, entities_class, opts = {})
+  #   records.each.map do |record|
+  #     if record.is_a?(Hash)
+  #       entities_record_no_base(record[:record], entities_class, opts.merge(record))
+  #     else
+  #       entities_record_no_base(record, entities_class, opts)
+  #     end
+  #   end
+  # end
 
-    data = opts.delete(:data) || file_records!(records, entities_class, opts).as_json
-    p    = Axlsx::Package.new
-
-    p.workbook.add_worksheet(name: '数据列表') do |sheet|
-      types  = Array.new(thead.length, :string)
-      widths = Array.new(thead.length, 13)
-
-      sheet.add_row thead, widths: widths, height: 30, sz: 13 if thead.present?
-
-      data.each do |row|
-        row.delete(:id) if opts[:without_id]
-
-        sheet.add_row format_file_values(row.values), widths: widths, types: types, height: 30, sz: 12
-      end
-    end
-
-    p.use_shared_strings = true
-
-    content_type 'application/octet-stream'
-    header['Access-Control-Expose-Headers'] = 'Content-Disposition'
-    header['Content-Disposition']           = "attachment; filename=#{ERB::Util.url_encode(file_name)}.xlsx"
-    env['api.format']                       = :binary
-    p.to_stream.read
-  end
-
-  def file_records!(records, entities_class, opts = {})
-    records.each.map do |record|
-      if record.is_a?(Hash)
-        entities_record_no_base(record[:record], entities_class, opts.merge(record))
-      else
-        entities_record_no_base(record, entities_class, opts)
-      end
-    end
-  end
-
-  def data_record!(record, entities_class, meta = {})
-    opts = meta.delete(:opts) || {}
-    opts.merge!(default_opts)
+  def data_records!(record, opts = {})
+    meta = opts.delete(:meta) || {}
 
     {
       meta: default_meta.merge(meta),
-      data: entities_record(record, entities_class, opts)
+      data: json_records!(record, opts)
     }
   end
 
-  def data_records!(records, entities_class, meta = {})
-    opts = meta.delete(:opts) || {}
+  alias data_record! data_records!
+
+  def json_records!(records, opts = {})
+    # record_class = records.respond_to?(:each) ? records.first.class : records.class
+    #
+    # if records.present? && !record_class.ancestors.include?(FileObject) &&
+    #   !record_class.to_s.include?('HttpLog')
+    #   record_class     = record_class.superclass unless record_class.superclass == ApplicationRecord
+    #   serializer_class = "#{opts[:namespace]}::#{record_class}Serializer"
+    #   raise "#{serializer_class} not defined" if serializer_class.safe_constantize.nil?
+    # end
+
     opts.merge!(default_opts)
-
-    {
-      meta: default_meta.merge(meta),
-      data: json_records!(records, entities_class, opts)
-    }
+    ActiveModelSerializers::SerializableResource.new(records, opts).as_json
   end
 
-  def json_records!(records, entities_class, opts = {})
-    return if records.nil?
+  def record_by_serializer(record, serializer, opts = {})
+    return if record.nil?
 
     opts.merge!(default_opts)
-    records.map.each_with_index { |record, index| entities_record(record, entities_class, opts.merge(rank: base_num(records) + index + 1)) }
+    serializer.new(record, opts).as_json
   end
 
-  def entities_record(record, entities_class, opts = {})
-    opts ||= {}
-    Entities::RecordBase.represent record, opts.merge(glass: entities_class)
-  end
-
-  # 转换为 hash, 一般在 service 中使用
-  def entities_hash(record, entities_class, opts = {})
-    return {} if record.blank?
-
-    json_str = entities_class.represent(record, opts).to_json
-    return {} if json_str.blank?
-
-    JSON.parse(json_str)
-  end
-
-  def entities_record_no_base(record, entities_class, opts = {})
-    opts ||= {}
-    entities_class.represent record, opts
-  end
-
-  def ancestry_tree(arrange_records, entity)
+  def ancestry_tree(arrange_records, opts = {})
     arrange_records.each.map do |parent, children|
-      attrs            = entity.represent(parent).as_json
-      attrs[:children] = ancestry_tree(children, entity) if children.present?
+      attrs            = json_records!(parent, opts)[:attributes]
+      attrs[:children] = ancestry_tree(children, opts) if children.present?
 
       attrs
     end
@@ -202,6 +187,7 @@ module DataBuildHelper
   def base_meta
     request = Grape::Request.new(env)
     {
+      locale:        I18n.locale,
       message:       I18n.t_message('success'),
       path:          request.path,
       status:        200,
@@ -212,8 +198,8 @@ module DataBuildHelper
 
   def default_meta
     meta                = base_meta
-    # meta[:payload]      = @payload || {}
-    meta[:current_user] = Entities::User::Simple.represent current_user
+    meta[:payload]      = @payload || {}
+    meta[:current_user] = ActiveModelSerializers::SerializableResource.new(current_user)
 
     meta
   end

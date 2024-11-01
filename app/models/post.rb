@@ -20,7 +20,6 @@
 #  index_posts_on_title            (title)
 #
 class Post < ApplicationRecord
-  include Disable
   include HtmlField
 
   html_field :desc, Files::ContentImg, Files::ContentVideo

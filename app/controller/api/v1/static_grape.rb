@@ -9,9 +9,6 @@ module Api::V1
       summary '获取枚举字段列表'
       detail 'get_enums'
       tags ['static']
-      success({ code: 200, model: Entities::RecordBase, examples: {
-        'resource.menu_type': [{ label: '菜单', value: 'menu' }, { label: '按钮', value: 'button' }]
-      } })
     end
     params do
       auto_field :enum_fields, type: Array, desc: '枚举字段关键字, 例如 resource.menu_type'
@@ -45,7 +42,8 @@ module Api::V1
       tags ['static']
     end
     get '/global_settings' do
-      data! GlobalSetting.settings(current_user)
+      settings = GlobalSetting.settings_for_user(current_user_id)
+      data_records! settings, namespace: 'List'
     end
   end
 end

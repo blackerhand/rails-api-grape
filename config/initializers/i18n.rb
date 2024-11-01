@@ -10,6 +10,12 @@ module I18n
     return '更新日期' if attributes.to_s == 'updated_date'
     return '页码' if attributes.to_s == 'page'
     return '分页数量' if attributes.to_s == 'per'
+    return '禁用时间' if attributes.to_s == 'disabled_at'
+    return '排序' if attributes.to_s == 'order_number'
+    return '类型' if attributes.to_s == 'class'
+    return '点击次数' if attributes.to_s == 'click_number'
+    return '操作人' if attributes.to_s == 'owner'
+
     return if model.blank?
 
     if attributes.present?

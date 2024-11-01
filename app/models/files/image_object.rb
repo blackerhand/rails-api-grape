@@ -3,14 +3,14 @@
 # Table name: file_objects
 #
 #  id                              :bigint           not null, primary key
-#  content_digest(文件内容摘要)    :string(255)
+#  content_digest(文件内容摘要)    :string
 #  disabled_at                     :datetime
 #  ext(文件后缀)                   :string(10)
-#  file                            :string(255)
+#  file                            :string
 #  fileable_type                   :string(40)
-#  filename(文件名称)              :string(255)
+#  filename(文件名称)              :string
 #  order_index(排序)               :integer          default(0)
-#  original_filename(原始文件名称) :string(255)
+#  original_filename(原始文件名称) :string
 #  size(文件大小)                  :decimal(10, 2)
 #  type                            :string(40)
 #  created_at                      :datetime         not null

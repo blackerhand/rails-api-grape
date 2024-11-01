@@ -8,7 +8,8 @@ module ApplicationHelper
 
   def update_current_user(user, remember)
     @current_user = user
-    @payload      = @current_user.payload.merge(remember: remember).stringify_keys
+    @current_user.update!(last_sign_in_at: Time.current)
+    @payload = @current_user.payload.merge(remember: remember).stringify_keys
   end
 
   def current_user_id
@@ -16,8 +17,7 @@ module ApplicationHelper
   end
 
   def set_locale
-    locale = params[:locale] ||
-      @payload.try(:[], 'settings').try(:[], 'locale')
+    locale = params[:locale] || @payload.try(:[], 'settings').try(:[], 'locale')
     return if locale.blank?
 
     I18n.locale = locale
@@ -32,7 +32,7 @@ module ApplicationHelper
   end
 
   def current_scope
-    record_class.enabled
+    record_class.all
   end
 
   def owner_scope
@@ -42,7 +42,7 @@ module ApplicationHelper
   def upload_file(file_type, params_file)
     file_class = file_type.safe_constantize
     valid_error!('文件类型不正确') if file_class.nil?
-    valid_error!('同一种类型的文件只能上传一个, 请删除后重试') if file_class.enabled.exists?(fileable: current_record)
+    valid_error!('同一种类型的文件只能上传一个, 请删除后重试') if file_class.exists?(fileable: current_record)
 
     @file_object = file_class.create!(fileable: current_record, file: params_file)
   end

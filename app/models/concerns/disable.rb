@@ -4,6 +4,7 @@ module Disable
   included do
     scope :disabled, -> { where.not(disabled_at: nil) }
     scope :enabled, -> { where(disabled_at: nil).order(id: :desc) }
+    scope :enabled_asc, -> { where(disabled_at: nil).order(id: :asc) }
 
     belongs_to :owner, class_name: 'User', foreign_key: 'created_user_id', optional: true
     belongs_to :modifier, class_name: 'User', foreign_key: 'updated_user_id', optional: true
@@ -18,6 +19,10 @@ module Disable
 
     def disabled_desc
       I18n.t("activerecord.attributes.disabled_names.#{enabled? ? 'enabled' : 'disabled'}")
+    end
+
+    def self.disabled_all
+      update_all(disabled_at: Time.current)
     end
 
     def disabled!
@@ -36,15 +41,15 @@ module Disable
     def before_disabled; end
 
     before_create do
-      self.created_user_id = PaperTrail.request.whodunnit
+      self.created_user_id ||= PaperTrail.request.whodunnit
     end
 
     before_update do
-      self.updated_user_id = PaperTrail.request.whodunnit
+      self.updated_user_id ||= PaperTrail.request.whodunnit
     end
 
     before_destroy do
-      self.updated_user_id = PaperTrail.request.whodunnit
+      self.updated_user_id ||= PaperTrail.request.whodunnit
     end
   end
 end

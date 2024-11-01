@@ -11,6 +11,7 @@ gem 'sprockets-rails'
 
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
+gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.2"
@@ -19,15 +20,15 @@ gem "puma", "~> 6.2"
 # gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis'
+gem 'redis', '~> 5.3'
 gem 'redis-rails'
-gem 'redis-namespace'
+# gem 'redis-namespace'
 
 # 敏感词过滤
 gem 'sensitive'
 
-gem 'sidekiq', '~> 6.5'
-gem 'sidekiq-cron', '~> 1.10'
+gem 'sidekiq', '~> 7.3'
+gem 'sidekiq-cron', '~> 1.12'
 
 gem 'config'
 
@@ -44,10 +45,9 @@ gem 'net-http', '~> 0.3'
 gem 'uri', '~> 0.10'
 
 # file
-gem 'carrierwave', '>= 3.0.0.beta', '< 4.0'
+gem 'carrierwave', '~> 3.0.7'
 gem 'rmagick'
 gem 'data_uri'
-
 gem 'paper_trail', '~> 14.0'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
@@ -69,13 +69,13 @@ gem "bootsnap", require: false
 gem "rack-cors"
 
 gem 'grape', '~> 1.7'
-gem 'grape-entity', '~> 1.0'
+# gem 'grape-entity', '~> 1.0'
 gem 'grape-rails-cache'
 gem 'hashie'
 gem 'hashie-forbidden_attributes'
 
 gem 'grape-swagger'
-gem 'grape-swagger-entity'
+# gem 'grape-swagger-entity'
 gem 'grape-swagger-rails'
 
 gem 'kaminari', '~> 1.2'
@@ -90,14 +90,21 @@ gem 'loofah-activerecord'
 
 gem 'aasm'
 
+gem 'http_store', '0.6.18', require: true #, git: 'https://github.com/blackerhand/http-store.git'
+gem 'action-store'
+
+# gem 'request-log-analyzer'
+# gem 'jbuilder'
+# gem 'jsonapi-serializer'
+gem 'batch-loader', '~> 2.0'
+gem "ams_lazy_relationships"
+
 gem "bugsnag"
 gem "uniform_notifier"
 
-gem 'http_store', '0.6.5', require: true #, git: 'https://github.com/blackerhand/http-store.git'
-
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   gem 'pry-byebug'
@@ -116,6 +123,8 @@ group :development, :test do
   gem 'faker'
   gem 'ffaker', '~> 2.9'
   gem 'webmock'
+
+  gem 'awesome_print'
 end
 
 group :development do

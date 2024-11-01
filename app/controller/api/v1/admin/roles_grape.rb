@@ -9,7 +9,7 @@ module Api::V1::Admin
     swagger_desc('get_admin_roles')
     get '/' do
       @roles = current_scope.page(params.page).per(page_per)
-      data_paginate!(@roles, Entities::Role::List)
+      data_paginate!(@roles, namespace: 'List')
     end
 
     swagger_desc('post_admin_roles')
@@ -25,13 +25,13 @@ module Api::V1::Admin
       valid_ids!(declared_params.resource_ids, Resource)
 
       @role = Role.create!(declared_params.to_h)
-      data_record!(@role, Entities::Role::Detail)
+      data_record!(@role, namespace: 'List')
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
       base.swagger_desc('get_admin_roles_id')
       get '/' do
-        data_record!(current_record, Entities::Role::Detail)
+        data_record!(current_record, namespace: 'List')
       end
 
       base.swagger_desc('put_admin_roles_id')
@@ -48,7 +48,7 @@ module Api::V1::Admin
         valid_ids!(declared_params.resource_ids, Resource)
 
         current_record.update!(declared_params.to_h)
-        data_record!(current_record, Entities::Role::Detail)
+        data_record!(current_record, namespace: 'List')
       end
 
       base.swagger_desc('delete_admin_roles_id')

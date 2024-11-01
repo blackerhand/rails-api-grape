@@ -13,7 +13,7 @@ module Api::V1
       temp_file   = Uploads::Base64Service.execute(params.base64)
       file_type   = params.file_type.constantize
       file_record = file_type.create!(file: temp_file)
-      data_record!(file_record, Entities::FileObject)
+      data_records!(file_record, serializer: FileObjectSerializer)
     end
 
     desc '上传文件' do
@@ -27,8 +27,9 @@ module Api::V1
     end
     post '/' do
       file_type = params.file_type.constantize
-      file      = file_type.create!(file: params.file)
-      data_record!(file, Entities::FileObject)
+      params.file.filename.force_encoding("UTF-8")
+      file = file_type.create!(file: params.file)
+      data_records!(file, serializer: FileObjectSerializer)
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do

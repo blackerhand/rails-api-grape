@@ -6,7 +6,7 @@ module Api::V1::Admin
       end
     end
 
-    swagger_desc 'get_global_settings'
+    swagger_desc 'get_admin_global_settings'
     params do
       optional :q, type: Hash do
         string_field :key_cont, type: String, optional: true
@@ -17,20 +17,21 @@ module Api::V1::Admin
       @global_settings = @search.result.order(id: :desc)
                                 .page(params_page).per(page_per)
 
-      data_paginate!(@global_settings, Entities::GlobalSetting::List)
+      data_paginate!(@global_settings, namespace: 'List')
     end
 
     route_param :id, requirements: { id: /[0-9]+/ } do
-      base.swagger_desc('put_global_settings_id')
+      base.swagger_desc('put_admin_global_settings_id')
       params do
         requires :global_setting, type: Hash do
-          string_field :desc, type: String
-          string_field :value, type: String
+          string_field :desc, type: String, optional: true
+          text_field :value, type: String, optional: true
+          array_field :files_setting_file_ids, type: Array, optional: true
         end
       end
       put '/' do
         current_record.update!(declared_params)
-        data_record!(current_record, Entities::GlobalSetting::List)
+        data_record!(current_record, namespace: 'List')
       end
     end
   end

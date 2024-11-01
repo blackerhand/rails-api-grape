@@ -9,7 +9,7 @@ module HtmlField
 
     tempfile = Uploads::RemoteImgService.execute(src)
     file_class.create!(file: tempfile)
-  rescue Uploads::RemoteImgGetError
+  rescue RemoteImgGetError
     nil
   end
 
@@ -47,6 +47,10 @@ module HtmlField
         end.compact
 
         send("#{field}=", doc.to_s)
+
+        if respond_to?("#{field}_title")
+          send("#{field}_title=", doc.text.truncate(100))
+        end
 
         block.call
 

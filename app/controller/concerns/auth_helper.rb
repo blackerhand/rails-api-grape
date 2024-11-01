@@ -35,6 +35,14 @@ module AuthHelper
     raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.resources?(action_full_name)
   end
 
+  def record_resource_authorize
+    return if controller_name.to_s == 'dashboard'
+    # return if controller_name.to_s == 'courses'
+
+    raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.record_resources?(current_course, action_full_name)
+    footmarkable!(current_course)
+  end
+
   def verify_access!(platform)
     can_access =
       case platform
@@ -45,9 +53,5 @@ module AuthHelper
       end
 
     raise PermissionDeniedError, I18n.t_message('page_no_permission') unless can_access
-  end
-
-  def verify_admin!
-    raise PermissionDeniedError, I18n.t_message('page_no_permission') unless current_user.can_access_admin
   end
 end

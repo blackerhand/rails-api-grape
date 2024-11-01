@@ -19,6 +19,12 @@ class WxaError < StandardError; end
 # service 前置校验不通过
 class ServiceCheckError < StandardError; end
 
+class ServiceStopError < StandardError; end
+
+class ServiceRetryError < StandardError; end
+
 class WxaPayError < StandardError; end
 
 class RemoteFileGetError < StandardError; end
+
+class RemoteImgGetError < StandardError; end

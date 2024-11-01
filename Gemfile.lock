@@ -12,6 +12,8 @@ GEM
   specs:
     aasm (5.5.0)
       concurrent-ruby (~> 1.0)
+    action-store (1.1.3)
+      rails (>= 5.2)
     actioncable (7.0.4.3)
       actionpack (= 7.0.4.3)
       activesupport (= 7.0.4.3)
@@ -57,6 +59,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_serializers (0.10.14)
+      actionpack (>= 4.1)
+      activemodel (>= 4.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (7.0.4.3)
       activesupport (= 7.0.4.3)
       globalid (>= 0.3.6)
@@ -81,12 +88,17 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
+    ams_lazy_relationships (0.4.0)
+      active_model_serializers (>= 0.10.0.rc4)
+      batch-loader
     ancestry (4.3.3)
       activerecord (>= 5.2.6)
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
+    awesome_print (1.9.2)
+    batch-loader (2.0.5)
     bcrypt (3.1.18)
     bcrypt_pbkdf (1.1.0)
     bootsnap (1.16.0)
@@ -114,19 +126,22 @@ GEM
       sidekiq (>= 6.0)
     capistrano3-nginx (2.1.6)
       capistrano (>= 3.0.0)
-    carrierwave (3.0.0.beta)
+    carrierwave (3.0.7)
       activemodel (>= 6.0.0)
       activesupport (>= 6.0.0)
       addressable (~> 2.6)
       image_processing (~> 1.1)
       marcel (~> 1.0.0)
       ssrf_filter (~> 1.0)
+    case_transform (0.2)
+      activesupport
     coderay (1.1.3)
     concurrent-ruby (1.2.2)
     config (4.2.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
-    connection_pool (2.4.0)
+    connection_pool (2.4.1)
+    cookiejar (0.3.4)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -144,7 +159,9 @@ GEM
     deep_merge (1.2.2)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    domain_name (0.6.20231109)
+    domain_name (0.6.20240107)
+    down (5.4.1)
+      addressable (~> 2.8)
     dry-configurable (1.0.1)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
@@ -178,9 +195,19 @@ GEM
       dry-schema (>= 1.12, < 2)
       zeitwerk (~> 2.6)
     ed25519 (1.3.0)
+    em-http-request (1.1.7)
+      addressable (>= 2.3.4)
+      cookiejar (!= 0.3.1)
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.2)
+      eventmachine (>= 1.0.0.beta.4)
     erubi (1.12.0)
-    et-orbi (1.2.7)
+    et-orbi (1.2.11)
       tzinfo
+    event_stream_parser (1.0.0)
+    eventmachine (1.2.7)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -188,11 +215,17 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     ffaker (2.22.0)
-    ffi (1.15.5)
+    ffi (1.17.0-arm64-darwin)
     foreman (0.87.2)
-    fugit (1.8.1)
-      et-orbi (~> 1, >= 1.2.7)
+    fugit (1.11.1)
+      et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -203,17 +236,11 @@ GEM
       mustermann-grape (~> 1.0.0)
       rack (>= 1.3.0, < 3)
       rack-accept
-    grape-entity (1.0.0)
-      activesupport (>= 3.0.0)
-      multi_json (>= 1.3.2)
     grape-rails-cache (0.1.2)
       activesupport
       grape
     grape-swagger (1.6.0)
       grape (~> 1.3)
-    grape-swagger-entity (0.5.1)
-      grape-entity (>= 0.6.0)
-      grape-swagger (>= 1.2.0)
     grape-swagger-rails (0.4.0)
       railties (>= 6.0.6.1)
     hashdiff (1.0.1)
@@ -221,22 +248,24 @@ GEM
     hashie-forbidden_attributes (0.1.1)
       hashie (>= 3.0)
     http-accept (1.7.0)
-    http-cookie (1.0.5)
+    http-cookie (1.0.7)
       domain_name (~> 0.5)
-    http_store (0.6.5)
+    http_parser.rb (0.8.0)
+    http_store (0.6.18)
       activerecord
       hashie
       rails
       rest-client
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
-    image_processing (1.12.2)
+    image_processing (1.13.0)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
     io-console (0.6.0)
     irb (1.6.4)
       reline (>= 0.3.0)
     json (2.6.3)
+    jsonapi-renderer (0.2.2)
     jwt (2.7.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -250,6 +279,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
+    logger (1.6.1)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -262,14 +292,15 @@ GEM
       net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
-    mime-types (3.5.1)
+    mime-types (3.6.0)
+      logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2023.1205)
-    mini_magick (4.12.0)
+    mime-types-data (3.2024.1001)
+    mini_magick (4.13.2)
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.7.0)
-    multi_json (1.15.0)
+    multipart-post (2.4.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     mustermann-grape (1.0.2)
@@ -291,6 +322,8 @@ GEM
     net-ssh (7.1.0)
     netrc (0.11.0)
     nio4r (2.5.9)
+    nokogiri (1.15.0-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.15.0-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.0-x86_64-linux)
@@ -301,6 +334,7 @@ GEM
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
+    pg (1.5.6)
     pkg-config (1.5.1)
     pry (0.14.2)
       coderay (~> 1.1)
@@ -358,7 +392,8 @@ GEM
       activesupport (>= 6.1.5)
       i18n
     ransack-enum (1.0.0)
-    redis (4.8.1)
+    redis (5.3.0)
+      redis-client (>= 0.22.0)
     redis-actionpack (5.3.0)
       actionpack (>= 5, < 8)
       redis-rack (>= 2.1.0, < 3)
@@ -366,8 +401,8 @@ GEM
     redis-activesupport (5.3.0)
       activesupport (>= 3, < 8)
       redis-store (>= 1.3, < 2)
-    redis-namespace (1.10.0)
-      redis (>= 4)
+    redis-client (0.22.2)
+      connection_pool
     redis-rack (2.1.4)
       rack (>= 2.0.8, < 3)
       redis-store (>= 1.2, < 2)
@@ -427,16 +462,23 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
+    ruby-openai (6.5.0)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
-    ruby-vips (2.1.4)
+    ruby-vips (2.2.2)
       ffi (~> 1.12)
+      logger
     ruby2_keywords (0.0.5)
     sensitive (1.0.2)
-    sidekiq (6.5.8)
-      connection_pool (>= 2.2.5, < 3)
-      rack (~> 2.0)
-      redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.10.1)
+    sidekiq (7.3.2)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
+    sidekiq-cron (1.12.0)
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
@@ -446,6 +488,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    skylight (6.0.4)
+      activesupport (>= 5.2.0)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -456,7 +500,10 @@ GEM
     sshkit (1.21.4)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    ssrf_filter (1.1.1)
+    ssrf_filter (1.1.2)
+    tencentcloud-sdk-common (3.0.794)
+    tencentcloud-sdk-hunyuan (3.0.794)
+      tencentcloud-sdk-common (~> 3.0)
     thor (1.2.2)
     timecop (0.9.6)
     timeout (0.3.2)
@@ -475,14 +522,19 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
+  arm64-darwin-23
   x86_64-darwin-21
   x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
   aasm
+  action-store
+  ams_lazy_relationships
   ancestry (~> 4.3)
   annotate
+  awesome_print
+  batch-loader (~> 2.0)
   bcrypt (~> 3.1.18)
   bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap
@@ -495,31 +547,33 @@ DEPENDENCIES
   capistrano-sidekiq
   capistrano3-nginx (~> 2.0)
   capistrano3-puma!
-  carrierwave (>= 3.0.0.beta, < 4.0)
+  carrierwave (~> 3.0.7)
   config
   data_uri
   database_cleaner
   debug
+  down
   ed25519 (>= 1.2, < 2.0)
+  em-http-request
+  eventmachine
   factory_bot_rails
   faker
   ffaker (~> 2.9)
   foreman
   grape (~> 1.7)
-  grape-entity (~> 1.0)
   grape-rails-cache
   grape-swagger
-  grape-swagger-entity
   grape-swagger-rails
   hashie
   hashie-forbidden_attributes
-  http_store (= 0.6.5)
+  http_store (= 0.6.18)
   jwt (~> 2.1)
   kaminari (~> 1.2)
   loofah-activerecord
   mysql2 (~> 0.5)
   net-http (~> 0.3)
   paper_trail (~> 14.0)
+  pg
   pry-byebug
   pry-rails
   puma (~> 6.2)
@@ -528,8 +582,7 @@ DEPENDENCIES
   rails-i18n (~> 7.0.0)
   ransack (~> 4.1)
   ransack-enum
-  redis
-  redis-namespace
+  redis (~> 5.3)
   redis-rails
   rmagick
   rolify (~> 6.0)
@@ -537,11 +590,15 @@ DEPENDENCIES
   rubocop
   rubocop-performance
   rubocop-rails
+  ruby-openai
   sensitive
-  sidekiq (~> 6.5)
-  sidekiq-cron (~> 1.10)
+  sidekiq (~> 7.3)
+  sidekiq-cron (~> 1.12)
   simplecov
+  skylight
   sprockets-rails
+  tencentcloud-sdk-common
+  tencentcloud-sdk-hunyuan
   timecop
   tzinfo-data
   uniform_notifier

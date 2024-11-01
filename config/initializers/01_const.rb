@@ -3,15 +3,19 @@ module GRAPE_API
   JWT_REM_EXP = Settings.JWT_REM_EXP.to_i
   JWT_REFRESH = Settings.JWT_REFRESH.to_i
 
+  TMP_FILE_PATH = Rails.root.join('tmp/download')
+
   # 后台角色
   SUPER_ADMIN_ROLE_NAME    = :SUPER_ADMIN # 超级管理员
-  RAILS_SERVE_STATIC_FILES = true
+  ADMIN_ROLE_NAME          = :ADMIN # 学生
 
-  TYPE_LIMIT_LENGTH = 40
+  IMG_DEFAULT_URL = '/images/defaults/'
 
   SUPPORT_FILE_TYPES = %w[Files::Avatar
                           Files::ContentImg
                           Files::ContentVideo]
+
+  IMG_EXTS = %w[jpg jpeg gif png svg heic webp ico]
 
   # 正则不允许为空, 设置的时候请注意此字段, 设置 optional 无效
   EMAIL_REGEX  = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -21,7 +25,10 @@ module GRAPE_API
 
   # 字符串
   MAX_TEXT_LENGTH   = 20000
+  SAFE_HTML_LENGTH  = 1000
   MAX_STRING_LENGTH = 100
+  LONG_TEXT_LENGTH  = nil
+  TYPE_LIMIT_LENGTH = 40
 
   # 字母开头, 正则允许为空, 非空检验用 grape 校验, 设置 optional 有效
   EN_REGEX = /\A([a-zA-Z][a-zA-Z0-9_\-:]*)?\Z/

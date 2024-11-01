@@ -3,7 +3,7 @@
 # Table name: roles
 #
 #  id              :bigint           not null, primary key
-#  desc            :string(255)
+#  desc            :string
 #  disabled_at     :datetime
 #  name            :string(100)
 #  name_zh         :string(100)
@@ -24,11 +24,10 @@
 #  index_roles_on_resource_id                             (resource_id)
 #
 class Role < ApplicationRecord
-  include Disable
   scopify
 
-  scope :pure_roles, -> { enabled.where(resource_id: nil) }
-  scope :resource_roles, -> { enabled.where.not(resource_id: nil) }
+  scope :pure_roles, -> { all.where(resource_id: nil) }
+  scope :resource_roles, -> { all.where.not(resource_id: nil) }
 
   # rubocop:disable Rails/HasAndBelongsToMany
   has_and_belongs_to_many :resources, join_table: :acls

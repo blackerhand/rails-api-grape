@@ -10,7 +10,7 @@ module Api::V1::Admin
     get '/' do
       @search    = HttpLog.ransack(params_q).result
       @http_logs = @search.order(id: :desc).page(params.page).per(page_per)
-      data_paginate!(@http_logs, Entities::HttpLog::List)
+      data_paginate!(@http_logs, namespace: 'List')
     end
   end
 end

@@ -50,10 +50,6 @@ class HttpLog < HttpStore::HttpLog
     I18n.t("activerecord.attributes.http_log.client_type_names.#{client_type}")
   end
 
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[id client_type]
-  end
-
   def format_response
     status_code <= 200 ? I18n.t_message('http_log_request_success') : I18n.t_message('http_log_request_error')
   end

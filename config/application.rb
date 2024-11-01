@@ -46,10 +46,11 @@ module RailsApiGrapeV2
     config.cache_store = :redis_cache_store, {
       url:        Settings.REDIS_URL || 'redis://127.0.0.1:6379/1',
       password:   Settings.REDIS_PASSWD,
-      namespace:  "cache",
       expires_in: 90.minutes
     }
 
+    config.middleware.use BatchLoader::Middleware
     config.middleware.use HttpStore::Middleware::RequestLog
+    config.action_cable.allowed_request_origins = [%r{https?://\S+}, "chrome-extension://cbcbkhdmedgianpaifchdaddpnmgnknn"]
   end
 end

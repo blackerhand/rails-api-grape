@@ -6,7 +6,7 @@
 #  desc(描述)        :string(255)
 #  disabled_at       :datetime
 #  key(键)           :string(255)
-#  value(值)         :string(255)
+#  value(值)         :text(65535)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  created_user_id   :bigint
@@ -24,19 +24,23 @@ class GlobalSetting < ApplicationRecord
   scope :global_settings, -> { where(user_id: nil) }
 
   belongs_to :user, optional: true
+  has_many_fileables Files::SettingFile
+
   validates :key, presence: true, uniqueness: { scope: :user_id }
 
   def self.set(key:, value:, desc: nil, user_id: nil)
     setting = find_or_initialize_by(key: key, user_id: user_id)
     setting.update(value: value, desc: desc)
+    setting
   end
 
-  def self.settings(user_id)
-    # user_id desc => 1, nil, 用户配置高于全局配置 1 > nil
-    setting_records = where(user_id: [user_id, nil]).order(user_id: :desc)
+  def self.get(key:, user_id: nil)
+    find_by(key: key, user_id: user_id)&.value
+  end
 
-    setting_records.each_with_object(Hashie::Mash.new) do |setting, result|
-      result[setting.key] ||= setting.value
-    end
+  def self.settings_for_user(user_id)
+    return global_settings if user_id.nil?
+
+    where(user_id: [user_id, nil]).order(user_id: :desc).group_by(&:key).map(&:last).flatten
   end
 end

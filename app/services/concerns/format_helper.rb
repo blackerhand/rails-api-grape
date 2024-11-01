@@ -3,7 +3,7 @@ module FormatHelper
     content = content.to_s
     return content if content.length <= GRAPE_API::MAX_TEXT_LENGTH
 
-    "#{content[0..GRAPE_API::MAX_TEXT_LENGTH]}..."
+    "#{content[0..GRAPE_API::SAFE_HTML_LENGTH]}..."
   end
 
   def uri_data?(base64_str)
@@ -62,6 +62,21 @@ module FormatHelper
       'png'
     when /^#{jpg}/, /^#{jpg2}/
       'jpg'
+    end
+  end
+
+  def time_to_sec(time_text)
+    return [] if time_text.blank?
+
+    time_text = time_text.to_s.gsub(/\s/, '') # 去除空格
+    time_ary  = if time_text.include?('-->')
+                  time_text.split('-->')
+                else
+                  time_text.split('-')
+                end
+
+    time_ary.map do |time|
+      time.split(':').map(&:to_f).inject { |a, b| (a * 60) + b }
     end
   end
 end

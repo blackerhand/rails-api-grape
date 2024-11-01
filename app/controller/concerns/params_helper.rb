@@ -1,6 +1,6 @@
 module ParamsHelper
-  def declared_params
-    real_params.send params_scope
+  def declared_params(key = params_scope)
+    real_params.send key
   end
 
   def real_params
@@ -12,11 +12,12 @@ module ParamsHelper
   end
 
   def params_q
-    real_params.q || Hashie::Mash.new
+    params.q || Hashie::Mash.new
   end
 
   def page_per
-    params[:per] || GRAPE_API::PER_PAGE
+    per = params[:per] || GRAPE_API::PER_PAGE
+    per.to_i > 99 ? 99 : per.to_i
   end
 
   def params_page

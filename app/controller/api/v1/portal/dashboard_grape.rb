@@ -3,10 +3,7 @@ module Api::V1::Portal
     swagger_desc('get_portal')
     get '/' do
       @posts = Post.enabled.limit(4)
-
-      data!({
-              posts: json_records!(@posts, Entities::Post::List),
-            })
+      data_records! @posts
     end
   end
 end

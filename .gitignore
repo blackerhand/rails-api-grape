@@ -28,11 +28,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/config/credentials/staging.key
+/config/credentials/*.key
+/config/database.yml
 
-/config/credentials/production.key
-
-config/database.yml
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml

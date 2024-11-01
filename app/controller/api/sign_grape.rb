@@ -2,6 +2,7 @@
 module Api
   class SignGrape < BaseGrape
     helpers AuthHelper
+    helpers FootmarkHelper
 
     before do
       parse_jwt!

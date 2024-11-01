@@ -15,7 +15,6 @@ class BaseGrape < Grape::API
           CacheHelper, FieldHelper, ValidHelper,
           ParamsHelper, ResourceHelper
 
-  include Grape::Rails::Cache
   include SwaggerHelper
 
   # 401
