@@ -3,7 +3,7 @@ module FieldHelper
     model_string, field_key_string = model_field.split('.')
     model_string                   = model_string.to_s.classify
     model_class                    = model_string.safe_constantize
-    field_key                      = field_key_string.to_s.underscore
+    field_key                      = field_key_string.to_s.underscore.singularize
     return unless safe_field(model_class, field_key)
 
     [model_class, field_key]

@@ -23,7 +23,10 @@ set :deploy_to, "/var/www/grape_v2"
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml", 'config/master.key'
-set :linked_files, ['config/database.yml', 'config/credentials/staging.key', 'config/credentials/production.key', 'config/skylight.yml']
+set :linked_files, ['config/database.yml',
+                    'config/credentials/staging.key',
+                    'config/credentials/production.key',
+                    'config/skylight.yml']
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage"

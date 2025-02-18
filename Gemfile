@@ -10,7 +10,7 @@ gem 'rails-i18n', '~> 7.0.0'
 gem 'sprockets-rails'
 
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
+# gem "mysql2", "~> 0.5"
 gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -90,12 +90,14 @@ gem 'loofah-activerecord'
 
 gem 'aasm'
 
-gem 'http_store', '0.6.18', require: true #, git: 'https://github.com/blackerhand/http-store.git'
+gem 'http_store', '0.6.19', require: true #, git: 'https://github.com/blackerhand/http-store.git'
+
 gem 'action-store'
 
 # gem 'request-log-analyzer'
 # gem 'jbuilder'
 # gem 'jsonapi-serializer'
+gem 'active_model_serializers', '~> 0.10.14'
 gem 'batch-loader', '~> 2.0'
 gem "ams_lazy_relationships"
 
@@ -125,6 +127,9 @@ group :development, :test do
   gem 'webmock'
 
   gem 'awesome_print'
+
+  gem 'i18n_generators'
+  # gem 'rails-i18n-generator'
 end
 
 group :development do

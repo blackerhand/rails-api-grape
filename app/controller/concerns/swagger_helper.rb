@@ -16,6 +16,8 @@ module SwaggerHelper
     end
 
     def default_tags
+      return 'static' if self == Api::V1::StaticGrape
+
       self.to_s.underscore.match(/api\/v\d+\/(.*\/.*)?_grape/)[1].gsub('/', '_')
     end
 
