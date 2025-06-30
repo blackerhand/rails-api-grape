@@ -13,7 +13,7 @@ class BaseGrape < Grape::API
 
   helpers ApplicationHelper, ErrorHelper, DataBuildHelper,
           CacheHelper, FieldHelper, ValidHelper,
-          ParamsHelper, ResourceHelper
+          ParamsHelper, ResourceHelper, GrapeParamsHelper
 
   # include Grape::Rails::Cache
   include SwaggerHelper
