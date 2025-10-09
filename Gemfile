@@ -90,7 +90,7 @@ gem 'loofah-activerecord'
 
 gem 'aasm'
 
-gem 'http_store', '0.6.19', require: true #, git: 'https://github.com/blackerhand/http-store.git'
+gem 'http_store', '0.7.2', require: true #, git: 'https://github.com/blackerhand/http-store.git'
 
 gem 'action-store'
 
@@ -130,7 +130,6 @@ group :development, :test do
 
   gem 'i18n_generators'
   # gem 'rails-i18n-generator'
-
   gem 'ruby-lsp'
 end
 
