@@ -1,11 +1,20 @@
-HOST: 'http://localhost:3000'
+HOST: "http://localhost:3000"
 
 # redis
-REDIS_URL: 'redis://127.0.0.1:6379/2'
+REDIS_URL: "redis://127.0.0.1:6379/2"
 REDIS_PASSWD:
 
 # jwt
-JWT_SECRET: 'test'
+JWT_SECRET: "test"
 JWT_EXP: 1296000 # 15 天
 JWT_REM_EXP: 2592000 # 30 天
 JWT_REFRESH: 21600 # 6 小时
+
+# ba-test
+BA_TEST_API_KEY: "HDtPaUbsIgQGqU7nIc8PjaWKFwPHE65SsAxOFYy6wUo0DIWXdvPUugDlfe0yiiyK"
+BA_TEST_SECRET_KEY: "EGxVAnzkYZ97gOshCVem4pUNRTTEl20uMrFp9wbgZGd0eBy3bd0q5W1iCtwLvKNC"
+
+# binance
+BINANCE_BASE_URL: "https://testnet.binance.vision"
+BINANCE_API_KEY: "HDtPaUbsIgQGqU7nIc8PjaWKFwPHE65SsAxOFYy6wUo0DIWXdvPUugDlfe0yiiyK"
+BINANCE_SECRET_KEY: "EGxVAnzkYZ97gOshCVem4pUNRTTEl20uMrFp9wbgZGd0eBy3bd0q5W1iCtwLvKNC"
