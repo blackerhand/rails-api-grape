@@ -11,8 +11,18 @@ class BaseService
     raise NotImplementedError
   end
 
+  def current_user
+    @current_user ||= User.find_by(id: PaperTrail.request.whodunnit)
+  end
+
   def check_error!(message)
     raise ServiceCheckError, I18n.t_message(message) || message
+  end
+
+  def check_client!(client, message)
+    return if client.response_valid?
+
+    check_error!("第三方请求失败: #{message}, 返回结果: #{client.response_data}")
   end
 
   def job_stop_error!(message)
@@ -37,7 +47,19 @@ class BaseService
     gg2        = group2.group_by(&uniq_key_2)
 
     (gg1.keys + gg2.keys).uniq.each do |key|
-      yield(gg1[key]&.first, gg2[key]&.first)
+      group1_item = gg1[key]&.first
+      group2_item = gg2[key]&.first
+
+      change_mode =
+        if group1_item.present? && group2_item.present?
+          :no_change
+        elsif group1_item.blank?
+          :add
+        elsif group2_item.blank?
+          :remove
+        end
+
+      yield(group1_item, group2_item, change_mode)
     end
   end
 

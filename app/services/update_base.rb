@@ -13,9 +13,11 @@ class UpdateBase < BaseService
   end
 
   def execute
-    return self if changes.blank?
+    # TODO 由于修改图片 id 不会引发 change 修改,  这里 先注释
+    # return self if changes.blank?
 
     validate_params!
+
     if transaction
       ActiveRecord::Base.transaction do
         save_record!
@@ -41,6 +43,7 @@ class UpdateBase < BaseService
   end
 
   def save_record!
+
     record.save!
   end
 

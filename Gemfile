@@ -130,6 +130,8 @@ group :development, :test do
 
   gem 'i18n_generators'
   # gem 'rails-i18n-generator'
+
+  gem 'ruby-lsp'
 end
 
 group :development do
