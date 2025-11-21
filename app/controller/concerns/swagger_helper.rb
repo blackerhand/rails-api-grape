@@ -5,7 +5,7 @@ module SwaggerHelper
     def swagger_desc(action_name, opts = {})
       i18n_msg = I18n.safe_t("api.#{action_name}") || {}
 
-      summary_text = opts[:summary] || i18n_msg[:summary] || default_summary(action_name)
+      summary_text = opts[:summary] || i18n_msg.try(:[], :summary) || default_summary(action_name)
       tags_text    = opts[:tags] || default_tags
 
       desc summary_text do
@@ -18,26 +18,26 @@ module SwaggerHelper
     def default_tags
       return 'static' if self == Api::V1::StaticGrape
 
-      self.to_s.underscore.match(/api\/v\d+\/(.*\/.*)?_grape/)[1].gsub('/', '_')
+      to_s.underscore.match(/api\/v\d+\/(.*\/.*)?_grape/)[1].tr('/', '_')
     end
 
     def record_class
-      self.to_s.split('::').last.gsub('Grape', '').singularize.classify.safe_constantize
+      to_s.split('::').last.gsub('Grape', '').singularize.classify.safe_constantize
     end
 
     def action_type(action_name)
       action_method = action_name.to_s.split('_').first
 
-      if action_name.match(/_id$/)
+      if action_name =~ /_id$/
         return :show if action_method == 'get'
         return :update if action_method == 'put'
         return :destroy if action_method == 'delete'
       end
 
-      if action_name.match(/_#{record_class.to_s.underscore.pluralize}$/)
-        return :index if action_method == 'get'
-        return :create if action_method == 'post'
-      end
+      return unless action_name =~ /_#{record_class.to_s.underscore.pluralize}$/
+      return :index if action_method == 'get'
+
+      :create if action_method == 'post'
     end
 
     def default_summary(action_name)

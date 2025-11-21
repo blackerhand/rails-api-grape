@@ -33,7 +33,7 @@ module I18n
 
   def safe_t(key)
     text = t(key)
-    return if text.to_s.include?('translation missing')
+    return if text.to_s.downcase.include?('translation missing')
 
     text
   end

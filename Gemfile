@@ -1,5 +1,5 @@
-source "https://rubygems.org"
-# source 'https://gems.ruby-china.com'
+# source "https://rubygems.org"
+source 'https://gems.ruby-china.com'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # ruby "3.2.2"
@@ -42,7 +42,7 @@ gem 'rolify', '~> 6.0'
 gem 'net-http', '~> 0.3'
 # gem 'net-smtp'
 # gem 'net-imap'
-gem 'uri', '~> 0.10'
+gem 'uri', '0.10.1'
 
 # file
 gem 'carrierwave', '~> 3.0.7'

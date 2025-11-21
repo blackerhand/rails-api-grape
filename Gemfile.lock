@@ -8,7 +8,7 @@ GIT
       puma (>= 6.1, < 8.0)
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://gems.ruby-china.com/
   specs:
     aasm (5.5.2)
       concurrent-ruby (~> 1.0)
@@ -325,8 +325,8 @@ GEM
     mustermann-grape (1.0.2)
       mustermann (>= 1.0.0)
     mutex_m (0.3.0)
-    net-http (0.8.0)
-      uri (>= 0.11.1)
+    net-http (0.7.0)
+      uri
     net-imap (0.5.12)
       date
       net-protocol
@@ -559,7 +559,7 @@ GEM
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
     uniform_notifier (1.18.0)
-    uri (0.13.3)
+    uri (0.10.1)
     webmock (3.26.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -652,7 +652,7 @@ DEPENDENCIES
   timecop
   tzinfo-data
   uniform_notifier
-  uri (~> 0.10)
+  uri (= 0.10.1)
   webmock
 
 BUNDLED WITH
